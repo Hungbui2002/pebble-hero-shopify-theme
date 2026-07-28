@@ -1,0 +1,36 @@
+{% assign footer_facebook_url = section.settings.facebook_url | default: settings.social_facebook %}
+{% assign footer_twitter_url = section.settings.twitter_url | default: settings.social_twitter %}
+{% assign footer_instagram_url = section.settings.instagram_url | default: settings.social_instagram %}
+{% assign footer_youtube_url = section.settings.youtube_url | default: settings.social_youtube %}
+<div class="kito-container kito-footer-wrap">
+  <footer class="kito-footer">
+    <div class="kito-footer-contact"><p class="kito-logo">{{ section.settings.logo_text }}</p><h3>Contact Info</h3><p class="kito-footer-line"><span class="fa fa-map-marker" aria-hidden="true"></span><span>{{ section.settings.contact_address | newline_to_br }}</span></p><p class="kito-footer-line"><span class="fa fa-envelope-o" aria-hidden="true"></span><span>{{ section.settings.contact_email }}</span></p><p class="kito-footer-line"><span class="fa fa-headphones" aria-hidden="true"></span><span>{{ section.settings.contact_phone }}</span></p></div>
+    <div><h3>{{ section.settings.footer_column_one_title }}</h3>{% if section.settings.footer_menu_one != blank %}{% for link in section.settings.footer_menu_one.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}{% else %}<a href="{{ routes.account_url }}">My account</a><a href="{{ routes.cart_url }}">Cart</a><a href="#wishlist">Wishlist</a><a href="#compare">Product Compare</a>{% endif %}</div>
+    <div><h3>{{ section.settings.footer_column_two_title }}</h3>{% if section.settings.footer_menu_two != blank %}{% for link in section.settings.footer_menu_two.links %}<a href="{{ link.url }}">{{ link.title }}</a>{% endfor %}{% else %}<a href="#privacy">Privacy policy</a><a href="#refund">Refund policy</a><a href="#shipping">Shipping &amp; Return</a><a href="#terms">Term &amp; conditions</a>{% endif %}</div>
+    <div class="kito-footer-social"><h3>{{ section.settings.footer_column_three_title }}</h3><a href="{{ footer_facebook_url | default: '#' }}"><span class="fa fa-facebook" aria-hidden="true"></span><span>Facebook</span></a><a href="{{ footer_twitter_url | default: '#' }}"><span class="fa fa-twitter" aria-hidden="true"></span><span>Tweeter</span></a><a href="{{ footer_instagram_url | default: '#' }}"><span class="fa fa-instagram" aria-hidden="true"></span><span>Instagram</span></a><a href="{{ footer_youtube_url | default: '#' }}"><span class="fa fa-youtube-play" aria-hidden="true"></span><span>Youtube</span></a></div>
+  </footer>
+  <p class="kito-copyright">{{ section.settings.copyright }}</p>
+</div>
+
+{% schema %}
+{
+  "name": "KITO footer",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "KITO" },
+    { "type": "textarea", "id": "contact_address", "label": "Contact address", "default": "560 King St W, Kingston, ON K7L 4V7, Canada" },
+    { "type": "text", "id": "contact_email", "label": "Contact email", "default": "contactinfo@gmail.com" },
+    { "type": "text", "id": "contact_phone", "label": "Contact phone", "default": "+1 212 736 3100" },
+    { "type": "text", "id": "footer_column_one_title", "label": "Footer column one title", "default": "Quick Links" },
+    { "type": "link_list", "id": "footer_menu_one", "label": "Footer menu one" },
+    { "type": "text", "id": "footer_column_two_title", "label": "Footer column two title", "default": "Information" },
+    { "type": "link_list", "id": "footer_menu_two", "label": "Footer menu two" },
+    { "type": "text", "id": "footer_column_three_title", "label": "Footer column three title", "default": "Follow Us" },
+    { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
+    { "type": "url", "id": "twitter_url", "label": "Twitter URL" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "url", "id": "youtube_url", "label": "YouTube URL" },
+    { "type": "text", "id": "copyright", "label": "Copyright", "default": "Beae’stemplate © 2022. All Rights Reserved." }
+  ],
+  "presets": [{ "name": "KITO footer" }]
+}
+{% endschema %}

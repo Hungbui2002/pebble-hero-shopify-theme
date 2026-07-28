@@ -1,0 +1,43 @@
+{% assign figma_team_image_one = 'https://cdn.shopify.com/s/files/1/0947/1528/1780/files/kito-team-christian.jpg?v=1784607809' %}
+{% assign figma_team_image_two = 'https://cdn.shopify.com/s/files/1/0947/1528/1780/files/kito-team-diana.jpg?v=1784607818' %}
+{% assign figma_team_image_three = 'https://cdn.shopify.com/s/files/1/0947/1528/1780/files/kito-team-joey.jpg?v=1784607828' %}
+{% assign figma_team_image_four = 'https://cdn.shopify.com/s/files/1/0947/1528/1780/files/kito-team-behrouz.jpg?v=1784607837' %}
+<div class="kito-container kito-team-wrap">
+  <div class="kito-section-heading kito-team-heading"><h2>{{ section.settings.heading }}</h2></div>
+  <section class="kito-team">
+    {% for block in section.blocks %}
+      {% assign team_image = figma_team_image_one %}
+      {% if forloop.index == 2 %}{% assign team_image = figma_team_image_two %}{% elsif forloop.index == 3 %}{% assign team_image = figma_team_image_three %}{% elsif forloop.index >= 4 %}{% assign team_image = figma_team_image_four %}{% endif %}
+      <article class="kito-card kito-person" {{ block.shopify_attributes }}>
+        <div class="kito-avatar">{% if block.settings.image != blank %}{{ block.settings.image | image_url: width: 240, height: 240, crop: 'center' | image_tag: loading: 'lazy', alt: block.settings.name }}{% else %}<img src="{{ team_image }}" width="240" height="240" loading="lazy" alt="{{ block.settings.name }}">{% endif %}</div>
+        <h3>{{ block.settings.name }}</h3>
+        <p class="kito-role">{{ block.settings.role }}</p>
+        <p>{{ block.settings.description }}</p>
+        <div class="kito-socials">
+          <a href="{{ block.settings.facebook_url | default: '#' }}" aria-label="Facebook"><span class="fa fa-facebook" aria-hidden="true"></span></a>
+          <a href="{{ block.settings.twitter_url | default: '#' }}" aria-label="Twitter"><span class="fa fa-twitter" aria-hidden="true"></span></a>
+          <a href="{{ block.settings.instagram_url | default: '#' }}" aria-label="Instagram"><span class="fa fa-instagram" aria-hidden="true"></span></a>
+          <a href="{{ block.settings.youtube_url | default: '#' }}" aria-label="YouTube"><span class="fa fa-youtube-play" aria-hidden="true"></span></a>
+        </div>
+      </article>
+    {% endfor %}
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "KITO team",
+  "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "Our Team" }],
+  "blocks": [{ "type": "team_member", "name": "Team member", "settings": [
+    { "type": "image_picker", "id": "image", "label": "Photo" },
+    { "type": "text", "id": "name", "label": "Name", "default": "Name 01" },
+    { "type": "text", "id": "role", "label": "Role", "default": "CEO & Founder" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit." },
+    { "type": "url", "id": "facebook_url", "label": "Facebook URL" },
+    { "type": "url", "id": "twitter_url", "label": "Twitter URL" },
+    { "type": "url", "id": "instagram_url", "label": "Instagram URL" },
+    { "type": "url", "id": "youtube_url", "label": "YouTube URL" }
+  ]}],
+  "presets": [{ "name": "KITO team", "blocks": [{ "type": "team_member" }, { "type": "team_member" }, { "type": "team_member" }, { "type": "team_member" }] }]
+}
+{% endschema %}

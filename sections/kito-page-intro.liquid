@@ -1,0 +1,17 @@
+<div class="kito-container kito-page-intro-wrap">
+  <div class="kito-page-intro" {{ section.shopify_attributes }}>
+    <h1>{{ section.settings.page_title }}</h1>
+    <p>{{ section.settings.breadcrumb_text }}</p>
+  </div>
+</div>
+
+{% schema %}
+{
+  "name": "KITO page intro",
+  "settings": [
+    { "type": "text", "id": "page_title", "label": "Page title", "default": "About Us" },
+    { "type": "text", "id": "breadcrumb_text", "label": "Breadcrumb text", "default": "Home | About" }
+  ],
+  "presets": [{ "name": "KITO page intro" }]
+}
+{% endschema %}

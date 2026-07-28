@@ -1,0 +1,19 @@
+<div class="kito-container kito-stats-wrap">
+  <div class="kito-section-heading"><h2>{{ section.settings.heading }}</h2></div>
+  <section class="kito-stats">
+    {% for block in section.blocks %}<article class="kito-card kito-stat" {{ block.shopify_attributes }}><strong>{{ block.settings.value }}</strong><h3>{{ block.settings.label }}</h3><p>{{ block.settings.description }}</p></article>{% endfor %}
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "KITO stats",
+  "settings": [{ "type": "text", "id": "heading", "label": "Heading", "default": "What We Are Proud Of." }],
+  "blocks": [{ "type": "stat", "name": "Statistic", "settings": [
+    { "type": "text", "id": "value", "label": "Value", "default": "20+" },
+    { "type": "text", "id": "label", "label": "Label", "default": "Total top services" },
+    { "type": "textarea", "id": "description", "label": "Description", "default": "Lorem ipsum dolor sit amet, sed do consectetur adipiscing elit." }
+  ]}],
+  "presets": [{ "name": "KITO stats", "blocks": [{ "type": "stat" }, { "type": "stat" }, { "type": "stat" }, { "type": "stat" }] }]
+}
+{% endschema %}

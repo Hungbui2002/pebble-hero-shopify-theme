@@ -1,0 +1,40 @@
+<!doctype html>
+<html lang="{{ request.locale.iso_code }}">
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="canonical" href="{{ canonical_url }}">
+    {% if settings.favicon != blank %}<link rel="icon" type="image/png" href="{{ settings.favicon | image_url: width: 32, height: 32 }}">{% endif %}
+    {{ 'kito-homepage.css' | asset_url | stylesheet_tag }}
+    {% assign heading_font_bold = settings.heading_font | font_modify: 'weight', '700' %}
+    {% assign body_font_bold = settings.body_font | font_modify: 'weight', '700' %}
+    <style>
+      {{ settings.heading_font | font_face }}
+      {{ heading_font_bold | font_face }}
+      {{ settings.body_font | font_face }}
+      {{ body_font_bold | font_face }}
+      :root {
+        --theme-accent: {{ settings.accent_color }};
+        --theme-background: {{ settings.background_color }};
+        --theme-text: {{ settings.text_color }};
+        --theme-body-text: {{ settings.body_text_color }};
+        --theme-button-text: {{ settings.button_text_color }};
+        --theme-heading-case: {{ settings.heading_case }};
+        --theme-heading-font: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
+        --theme-body-font: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }};
+        --kito-pink: {{ settings.accent_color }};
+        --kito-ink: {{ settings.text_color }};
+        --kito-body: {{ settings.body_text_color }};
+        --kito-button-text: {{ settings.button_text_color }};
+      }
+      body { background-color: var(--theme-background); color: var(--theme-text); }
+      h1, h2, h3 { text-transform: var(--theme-heading-case); }
+      {{ settings.custom_css }}
+    </style>
+    <title>{{ page_title }}</title>
+    {{ content_for_header }}
+  </head>
+  <body class="theme-style-{{ settings.theme_style }}{% if settings.use_theme_typography %} kito-use-theme-fonts{% endif %}" data-cart-notification-enabled="{{ settings.enable_cart_notification }}" data-cart-notification-position="{{ settings.cart_notification_position }}">
+    {{ content_for_layout }}
+  </body>
+</html>

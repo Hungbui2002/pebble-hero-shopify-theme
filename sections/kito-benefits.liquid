@@ -1,0 +1,17 @@
+<div class="kito-container kito-benefits-wrap">
+  <section class="kito-benefits">
+    {% for block in section.blocks %}<article class="kito-benefit" {{ block.shopify_attributes }}><span class="kito-benefit-icon">{{ block.settings.icon }}</span><div><h3>{{ block.settings.title }}</h3><p>{{ block.settings.description }}</p></div></article>{% endfor %}
+  </section>
+</div>
+
+{% schema %}
+{
+  "name": "KITO benefits",
+  "blocks": [{ "type": "benefit", "name": "Benefit", "settings": [
+    { "type": "text", "id": "icon", "label": "Icon character", "default": "✦" },
+    { "type": "text", "id": "title", "label": "Title", "default": "Free Shipping" },
+    { "type": "text", "id": "description", "label": "Description", "default": "Free shipping orders from $150" }
+  ]}],
+  "presets": [{ "name": "KITO benefits", "blocks": [{ "type": "benefit" }, { "type": "benefit" }, { "type": "benefit" }] }]
+}
+{% endschema %}

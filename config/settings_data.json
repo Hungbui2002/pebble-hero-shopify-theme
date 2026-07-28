@@ -1,0 +1,20 @@
+{
+  "current": {
+    "accent_color": "#ec80a0",
+    "background_color": "#ffffff",
+    "text_color": "#1a1114",
+    "body_text_color": "#585d67",
+    "button_text_color": "#ffffff",
+    "heading_font": "assistant_n4",
+    "body_font": "assistant_n4",
+    "use_theme_typography": false,
+    "heading_case": "none",
+    "enable_search": true,
+    "search_placeholder": "Search products",
+    "enable_cart_notification": true,
+    "cart_notification_position": "bottom-right",
+    "theme_style": "kito",
+    "custom_css": ""
+  },
+  "presets": {}
+}

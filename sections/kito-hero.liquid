@@ -1,0 +1,28 @@
+<div class="kito-container kito-hero-wrap">
+  {% for block in section.blocks %}
+    <section class="kito-hero" id="about" {{ block.shopify_attributes }}>
+      <div class="kito-hero-copy"><p class="kito-eyebrow">{{ block.settings.eyebrow }}</p><h2>{{ block.settings.heading }}</h2>{% if block.settings.button_label != blank %}<a class="kito-button" href="{{ block.settings.button_link | default: '#contact' }}">{{ block.settings.button_label }}</a>{% endif %}</div>
+      <div class="kito-media kito-hero-media">{% if block.settings.video != blank %}{{ block.settings.video | video_tag: controls: true, autoplay: false, loop: false, muted: false, image_size: '1200x' }}{% elsif block.settings.image != blank %}{{ block.settings.image | image_url: width: 1200 | image_tag: loading: 'eager', alt: block.settings.image.alt }}{% else %}<div class="kito-hero-art"><img src="{{ 'kito-hero-figma.png' | asset_url }}" width="705" height="600" loading="eager" alt="Blue bird plush toy in a basket"><span class="kito-play" aria-hidden="true">▶</span></div>{% endif %}</div>
+    </section>
+  {% endfor %}
+</div>
+
+{% schema %}
+{
+  "name": "KITO hero",
+  "max_blocks": 1,
+  "blocks": [{
+    "type": "hero",
+    "name": "Hero content",
+    "settings": [
+      { "type": "text", "id": "eyebrow", "label": "Eyebrow", "default": "About Us" },
+      { "type": "text", "id": "heading", "label": "Heading", "default": "Bring Exciting Moments Of Fun While Playing & Learning For Children." },
+      { "type": "image_picker", "id": "image", "label": "Hero image" },
+      { "type": "video", "id": "video", "label": "Hero video" },
+      { "type": "text", "id": "button_label", "label": "Button label", "default": "Contact us" },
+      { "type": "url", "id": "button_link", "label": "Button link" }
+    ]
+  }],
+  "presets": [{ "name": "KITO hero", "blocks": [{ "type": "hero" }] }]
+}
+{% endschema %}

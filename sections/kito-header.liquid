@@ -1,0 +1,52 @@
+{% assign figma_icon_search = 'https://cdn.shopify.com/s/files/1/0947/1528/1780/files/kito-icon-search.png?v=1784614556' %}
+{% assign figma_icon_bag = 'https://cdn.shopify.com/s/files/1/0947/1528/1780/files/kito-icon-bag.png?v=1784614569' %}
+{% assign figma_icon_heart = 'https://cdn.shopify.com/s/files/1/0947/1528/1780/files/kito-icon-heart.png?v=1784614600' %}
+
+<div class="kito-home" id="KitoHome-{{ section.id }}">
+  {% assign topbar_locale_items = section.settings.topbar_right | split: '|' %}
+  <div class="kito-topbar">
+    <span>{{ section.settings.topbar_left }}</span>
+    <strong>{{ section.settings.topbar_center }}</strong>
+    <span class="kito-topbar-locales">
+      <span>{{ topbar_locale_items.first | strip }} <span class="fa fa-angle-down" aria-hidden="true"></span></span>
+      {% if topbar_locale_items.size > 1 %}<span>{{ topbar_locale_items.last | strip }} <span class="fa fa-angle-down" aria-hidden="true"></span></span>{% endif %}
+    </span>
+  </div>
+  <header class="kito-header">
+    <a class="kito-logo" href="{{ routes.root_url }}">{{ section.settings.logo_text }}</a>
+    <button class="kito-menu-toggle" type="button" aria-expanded="false" aria-controls="KitoNav-{{ section.id }}"><span></span><span></span><span></span><span class="visually-hidden">Open menu</span></button>
+    <nav class="kito-nav" id="KitoNav-{{ section.id }}" aria-label="Main navigation">
+      {% if section.settings.menu != blank %}{% for link in section.settings.menu.links %}<a href="{{ link.url }}">{{ link.title }}{% if link.links != blank %}<span class="fa fa-angle-down" aria-hidden="true"></span>{% endif %}</a>{% endfor %}{% else %}<a href="{{ routes.root_url }}">Home</a><a href="{{ routes.all_products_collection_url }}">Shop</a><a href="#pages">Pages <span class="fa fa-angle-down" aria-hidden="true"></span></a><a href="#contact">Contact</a>{% endif %}
+    </nav>
+    <div class="kito-actions" aria-label="Store actions">
+      {% if settings.enable_search %}<a href="{{ routes.search_url }}" aria-label="Search"><img src="{{ figma_icon_search }}" width="25" height="25" alt=""></a>{% endif %}
+      <a href="{{ routes.cart_url }}" aria-label="Cart"><img src="{{ figma_icon_bag }}" width="25" height="25" alt=""><span class="kito-action-count">{{ cart.item_count }}</span></a>
+      <a href="{{ routes.root_url }}#wishlist" aria-label="Wishlist"><img src="{{ figma_icon_heart }}" width="25" height="25" alt=""><span class="kito-action-count">0</span></a>
+    </div>
+  </header>
+</div>
+
+{% javascript %}
+  document.querySelectorAll('.kito-menu-toggle').forEach(function (button) {
+    button.addEventListener('click', function () {
+      var nav = document.getElementById(button.getAttribute('aria-controls'));
+      var open = button.getAttribute('aria-expanded') === 'true';
+      button.setAttribute('aria-expanded', String(!open));
+      nav.classList.toggle('is-open', !open);
+    });
+  });
+{% endjavascript %}
+
+{% schema %}
+{
+  "name": "KITO header",
+  "settings": [
+    { "type": "text", "id": "logo_text", "label": "Logo text", "default": "KITO" },
+    { "type": "link_list", "id": "menu", "label": "Main menu" },
+    { "type": "text", "id": "topbar_left", "label": "Top bar left text", "default": "KITO - Every day low price" },
+    { "type": "text", "id": "topbar_center", "label": "Top bar center text", "default": "Free Delivery on orders over £120. Don’t miss discount." },
+    { "type": "text", "id": "topbar_right", "label": "Top bar right text", "default": "ENG  |  USD" }
+  ],
+  "presets": [{ "name": "KITO header" }]
+}
+{% endschema %}

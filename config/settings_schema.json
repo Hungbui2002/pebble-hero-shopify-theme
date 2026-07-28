@@ -1,0 +1,76 @@
+[
+  {
+    "name": "Colors",
+    "settings": [
+      { "type": "color", "id": "accent_color", "label": "Accent color", "default": "#ec80a0" },
+      { "type": "color", "id": "background_color", "label": "Background color", "default": "#ffffff" },
+      { "type": "color", "id": "text_color", "label": "Text color", "default": "#1a1114" },
+      { "type": "color", "id": "body_text_color", "label": "Body text color", "default": "#585d67" },
+      { "type": "color", "id": "button_text_color", "label": "Button text color", "default": "#ffffff" }
+    ]
+  },
+  {
+    "name": "Typography",
+    "settings": [
+      { "type": "font_picker", "id": "heading_font", "label": "Heading font", "default": "assistant_n4" },
+      { "type": "font_picker", "id": "body_font", "label": "Body font", "default": "assistant_n4" },
+      { "type": "checkbox", "id": "use_theme_typography", "label": "Use selected fonts instead of Figma fonts", "default": false },
+      { "type": "select", "id": "heading_case", "label": "Heading text case", "default": "none", "options": [
+        { "value": "none", "label": "As entered" },
+        { "value": "uppercase", "label": "Uppercase" },
+        { "value": "capitalize", "label": "Capitalize" }
+      ]}
+    ]
+  },
+  {
+    "name": "Search",
+    "settings": [
+      { "type": "checkbox", "id": "enable_search", "label": "Enable search", "default": true },
+      { "type": "text", "id": "search_placeholder", "label": "Search placeholder", "default": "Search products" }
+    ]
+  },
+  {
+    "name": "Social media",
+    "settings": [
+      { "type": "url", "id": "social_facebook", "label": "Facebook" },
+      { "type": "url", "id": "social_twitter", "label": "Twitter" },
+      { "type": "url", "id": "social_instagram", "label": "Instagram" },
+      { "type": "url", "id": "social_youtube", "label": "YouTube" },
+      { "type": "url", "id": "social_tiktok", "label": "TikTok" },
+      { "type": "url", "id": "social_pinterest", "label": "Pinterest" }
+    ]
+  },
+  {
+    "name": "Favicon",
+    "settings": [
+      { "type": "image_picker", "id": "favicon", "label": "Favicon" }
+    ]
+  },
+  {
+    "name": "Add to cart notification",
+    "settings": [
+      { "type": "checkbox", "id": "enable_cart_notification", "label": "Show notification after adding to cart", "default": true },
+      { "type": "select", "id": "cart_notification_position", "label": "Notification position", "default": "bottom-right", "options": [
+        { "value": "bottom-right", "label": "Bottom right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "top-right", "label": "Top right" }
+      ]}
+    ]
+  },
+  {
+    "name": "Custom CSS",
+    "settings": [
+      { "type": "textarea", "id": "custom_css", "label": "Custom CSS", "info": "CSS applied after the theme styles." }
+    ]
+  },
+  {
+    "name": "Theme style",
+    "settings": [
+      { "type": "select", "id": "theme_style", "label": "Style preset", "default": "kito", "options": [
+        { "value": "kito", "label": "KITO" },
+        { "value": "soft", "label": "Soft" },
+        { "value": "minimal", "label": "Minimal" }
+      ]}
+    ]
+  }
+]
