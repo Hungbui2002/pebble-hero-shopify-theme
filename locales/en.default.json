@@ -3,5 +3,14 @@
     "accessibility": {
       "skip_to_content": "Skip to content"
     }
+  },
+  "sections": {
+    "pebble_hero": {
+      "slide_label": "Slide {{ index }} of {{ total }}",
+      "pagination_label": "Choose a slide",
+      "previous_slide": "Previous slide",
+      "next_slide": "Next slide",
+      "empty_heading": "Add a slide to begin"
+    }
   }
 }

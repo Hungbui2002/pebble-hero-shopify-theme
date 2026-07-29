@@ -1,77 +1,45 @@
 {
   "sections": {
-    "header": {
-      "type": "kito-header",
-      "settings": {}
-    },
-    "intro": {
-      "type": "kito-page-intro",
-      "settings": {}
-    },
-    "hero": {
-      "type": "kito-hero",
+    "pebble_hero": {
+      "type": "pebble-hero-slider",
       "blocks": {
-        "hero-content": {
-          "type": "hero"
+        "pebble-slide-1": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "NEW CAMPAIGN",
+            "heading": "Blooming Day & Rain",
+            "button_label": "Shop Collection",
+            "background_color": "#A5B18F"
+          }
+        },
+        "pebble-slide-2": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "NEW STORIES",
+            "heading": "Colorful Little Moments",
+            "button_label": "Shop Collection",
+            "background_color": "#D9A5B3"
+          }
+        },
+        "pebble-slide-3": {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "PLAY ALL DAY",
+            "heading": "Playful Days Ahead",
+            "button_label": "Shop Collection",
+            "background_color": "#8FAAB6"
+          }
         }
       },
-      "block_order": ["hero-content"],
-      "settings": {}
-    },
-    "stats": {
-      "type": "kito-stats",
+      "block_order": ["pebble-slide-1", "pebble-slide-2", "pebble-slide-3"],
       "settings": {
-        "heading": "What We Are Proud Of."
-      },
-      "blocks": {
-        "stat-1": { "type": "stat", "settings": { "value": "20+", "label": "Total top services" } },
-        "stat-2": { "type": "stat", "settings": { "value": "15+", "label": "Countries" } },
-        "stat-3": { "type": "stat", "settings": { "value": "98%", "label": "Positive Feedback" } },
-        "stat-4": { "type": "stat", "settings": { "value": "2,558", "label": "Usual users" } }
-      },
-      "block_order": ["stat-1", "stat-2", "stat-3", "stat-4"]
-    },
-    "story": {
-      "type": "kito-story",
-      "blocks": {
-        "story-image-one": { "type": "story_image_one" },
-        "story-image-two": { "type": "story_image_two" },
-        "story-content": { "type": "story_content" }
-      },
-      "block_order": ["story-image-one", "story-image-two", "story-content"],
-      "settings": {}
-    },
-    "team": {
-      "type": "kito-team",
-      "settings": { "heading": "Our Team" },
-      "blocks": {
-        "team-1": { "type": "team_member" },
-        "team-2": { "type": "team_member", "settings": { "role": "Personnel" } },
-        "team-3": { "type": "team_member", "settings": { "role": "Personnel" } },
-        "team-4": { "type": "team_member", "settings": { "role": "Personnel" } }
-      },
-      "block_order": ["team-1", "team-2", "team-3", "team-4"]
-    },
-    "benefits": {
-      "type": "kito-benefits",
-      "blocks": {
-        "benefit-1": { "type": "benefit", "settings": { "icon": "&#xf0d1;", "title": "Free Shipping", "description": "Free shipping orders from $150" } },
-        "benefit-2": { "type": "benefit", "settings": { "icon": "&#xf06b;", "title": "Gift/Discount Codes", "description": "Many discount codes every day" } },
-        "benefit-3": { "type": "benefit", "settings": { "icon": "&#xf021;", "title": "Money Return", "description": "Return it within 30 days" } }
-      },
-      "block_order": ["benefit-1", "benefit-2", "benefit-3"],
-      "settings": {}
-    },
-    "newsletter": {
-      "type": "kito-newsletter",
-      "blocks": { "newsletter-content": { "type": "newsletter" } },
-      "block_order": ["newsletter-content"],
-      "settings": {}
-    },
-    "footer": {
-      "type": "kito-footer",
-      "settings": {}
+        "autoplay": true,
+        "autoplay_delay": 5000,
+        "show_navigation": true,
+        "show_pagination": true,
+        "content_position": "middle-left"
+      }
     }
   },
-  "order": ["header", "intro", "hero", "stats", "story", "team", "benefits", "newsletter", "footer"]
+  "order": ["pebble_hero"]
 }

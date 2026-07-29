@@ -1,0 +1,528 @@
+.pebble-hero {
+  --pebble-ease: cubic-bezier(.22, 1, .36, 1);
+  display: block;
+  width: 100%;
+  padding-block: var(--pebble-padding-top) var(--pebble-padding-bottom);
+  font-family: var(--pebble-body-font, Arial, sans-serif);
+}
+
+.pebble-hero__frame {
+  position: relative;
+  width: min(var(--pebble-max-width), calc(100% - (var(--pebble-page-gap) * 2)));
+  height: var(--pebble-desktop-height);
+  margin-inline: auto;
+  overflow: hidden;
+  border-radius: var(--pebble-radius);
+  background: #a5b18f;
+  isolation: isolate;
+}
+
+.pebble-hero--full .pebble-hero__frame {
+  width: 100%;
+}
+
+.pebble-hero__swiper,
+.pebble-hero__swiper .swiper-wrapper,
+.pebble-hero__slide {
+  width: 100%;
+  height: 100%;
+}
+
+.pebble-hero__slide {
+  position: relative;
+  overflow: hidden;
+}
+
+.pebble-hero__media,
+.pebble-hero__media picture,
+.pebble-hero__image,
+.pebble-hero__placeholder {
+  position: absolute;
+  inset: 0;
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.pebble-hero__image {
+  object-fit: cover;
+  object-position: var(--pebble-image-position);
+  transform: scale(1.075);
+  transition: transform 1.4s var(--pebble-ease);
+}
+
+.pebble-hero__placeholder {
+  fill: rgba(255, 255, 255, .38);
+  background: transparent;
+  transform: scale(1.02);
+  transition: transform 1.4s var(--pebble-ease);
+}
+
+.pebble-hero__slide.swiper-slide-active .pebble-hero__image,
+.pebble-hero__slide.swiper-slide-active .pebble-hero__placeholder {
+  transform: scale(1);
+}
+
+.pebble-hero__overlay {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  background: var(--pebble-overlay-color);
+  opacity: var(--pebble-overlay-opacity);
+  pointer-events: none;
+}
+
+.pebble-hero__slide-inner {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  width: 100%;
+  height: 100%;
+  padding: clamp(28px, 5vw, 80px);
+  pointer-events: none;
+}
+
+.pebble-hero--top-left .pebble-hero__slide-inner {
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.pebble-hero--top-center .pebble-hero__slide-inner {
+  align-items: center;
+  justify-content: flex-start;
+}
+
+.pebble-hero--top-right .pebble-hero__slide-inner {
+  align-items: flex-end;
+  justify-content: flex-start;
+}
+
+.pebble-hero--middle-left .pebble-hero__slide-inner {
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.pebble-hero--middle-center .pebble-hero__slide-inner {
+  align-items: center;
+  justify-content: center;
+}
+
+.pebble-hero--middle-right .pebble-hero__slide-inner {
+  align-items: flex-end;
+  justify-content: center;
+}
+
+.pebble-hero--bottom-left .pebble-hero__slide-inner {
+  align-items: flex-start;
+  justify-content: flex-end;
+}
+
+.pebble-hero--bottom-center .pebble-hero__slide-inner {
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.pebble-hero--bottom-right .pebble-hero__slide-inner {
+  align-items: flex-end;
+  justify-content: flex-end;
+}
+
+.pebble-hero__content {
+  width: min(100%, var(--pebble-content-width));
+  color: var(--pebble-text-color);
+  pointer-events: auto;
+}
+
+.pebble-hero--top-center .pebble-hero__content,
+.pebble-hero--middle-center .pebble-hero__content,
+.pebble-hero--bottom-center .pebble-hero__content {
+  text-align: center;
+}
+
+.pebble-hero--top-right .pebble-hero__content,
+.pebble-hero--middle-right .pebble-hero__content,
+.pebble-hero--bottom-right .pebble-hero__content {
+  text-align: right;
+}
+
+.pebble-hero__eyebrow {
+  margin: 0 0 24px;
+  color: inherit;
+  font: 700 13px/1.2 var(--pebble-body-font, Arial, sans-serif);
+  letter-spacing: .045em;
+  text-transform: uppercase;
+}
+
+.pebble-hero__heading {
+  max-width: 12ch;
+  margin: 0;
+  color: inherit;
+  font-family: var(--pebble-heading-font, Arial, sans-serif);
+  font-size: var(--pebble-heading-size);
+  font-weight: 700;
+  line-height: .98;
+  letter-spacing: -.045em;
+  text-transform: none;
+}
+
+.pebble-hero--top-center .pebble-hero__heading,
+.pebble-hero--middle-center .pebble-hero__heading,
+.pebble-hero--bottom-center .pebble-hero__heading {
+  margin-inline: auto;
+}
+
+.pebble-hero--top-right .pebble-hero__heading,
+.pebble-hero--middle-right .pebble-hero__heading,
+.pebble-hero--bottom-right .pebble-hero__heading {
+  margin-left: auto;
+}
+
+.pebble-hero__description {
+  max-width: 44ch;
+  margin: 22px 0 0;
+  color: inherit;
+  font: 500 16px/1.55 var(--pebble-body-font, Arial, sans-serif);
+}
+
+.pebble-hero__description p {
+  margin: 0;
+  color: inherit;
+  font: inherit;
+}
+
+.pebble-hero--top-center .pebble-hero__description,
+.pebble-hero--middle-center .pebble-hero__description,
+.pebble-hero--bottom-center .pebble-hero__description {
+  margin-inline: auto;
+}
+
+.pebble-hero--top-right .pebble-hero__description,
+.pebble-hero--middle-right .pebble-hero__description,
+.pebble-hero--bottom-right .pebble-hero__description {
+  margin-left: auto;
+}
+
+.pebble-hero__button {
+  display: inline-flex;
+  min-height: 50px;
+  align-items: center;
+  gap: 18px;
+  margin-top: 30px;
+  padding: 6px 7px 6px 24px;
+  border-radius: 999px;
+  color: var(--pebble-button-text);
+  background: var(--pebble-button-background);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
+  font: 700 14px/1 var(--pebble-body-font, Arial, sans-serif);
+  text-decoration: none;
+  transition: transform .35s var(--pebble-ease), box-shadow .35s var(--pebble-ease);
+}
+
+.pebble-hero__button-icon {
+  display: inline-grid;
+  width: 38px;
+  height: 38px;
+  flex: 0 0 38px;
+  place-items: center;
+  border-radius: 50%;
+  color: var(--pebble-button-background);
+  background: var(--pebble-button-text);
+  transition: transform .35s var(--pebble-ease);
+}
+
+.pebble-hero__button-icon svg {
+  width: 15px;
+  height: 15px;
+}
+
+.pebble-hero__button:hover {
+  box-shadow: 0 14px 34px rgba(0, 0, 0, .14);
+  transform: translateY(-2px);
+}
+
+.pebble-hero__button:hover .pebble-hero__button-icon {
+  transform: translateX(2px);
+}
+
+.pebble-hero__button:focus-visible,
+.pebble-hero__nav-button:focus-visible {
+  outline: 3px solid currentColor;
+  outline-offset: 3px;
+}
+
+.pebble-hero__animate {
+  opacity: 0;
+  transform: translate3d(0, 34px, 0);
+  transition:
+    opacity .5s ease,
+    transform .82s var(--pebble-ease);
+}
+
+.pebble-hero__slide.swiper-slide-active .pebble-hero__animate {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+.pebble-hero__slide.swiper-slide-active .pebble-hero__animate--1 {
+  transition-delay: .12s;
+}
+
+.pebble-hero__slide.swiper-slide-active .pebble-hero__animate--2 {
+  transition-delay: .2s;
+}
+
+.pebble-hero__slide.swiper-slide-active .pebble-hero__animate--3 {
+  transition-delay: .28s;
+}
+
+.pebble-hero__slide.swiper-slide-active .pebble-hero__animate--4 {
+  transition-delay: .36s;
+}
+
+.pebble-hero__controls {
+  position: absolute;
+  z-index: 5;
+  right: clamp(28px, 4.5vw, 72px);
+  bottom: clamp(26px, 4vw, 54px);
+  display: flex;
+  width: min(370px, calc(100% - 56px));
+  align-items: center;
+  color: #fff;
+}
+
+.pebble-hero__controls--navigation-only {
+  width: auto;
+}
+
+.pebble-hero__pagination.swiper-pagination {
+  position: static;
+  display: flex;
+  width: auto;
+  min-width: 0;
+  flex: 1 1 auto;
+  align-items: center;
+  color: inherit;
+  transform: none;
+}
+
+.pebble-hero__fraction {
+  display: inline-flex;
+  flex: 0 0 auto;
+  align-items: baseline;
+  color: inherit;
+  font: 700 14px/1 var(--pebble-body-font, Arial, sans-serif);
+  letter-spacing: .01em;
+}
+
+.pebble-hero__pagination-line {
+  height: 1px;
+  flex: 1 1 auto;
+  margin-left: 22px;
+  background: rgba(255, 255, 255, .72);
+}
+
+.pebble-hero__navigation {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 2px;
+  margin-left: 14px;
+}
+
+.pebble-hero__nav-button {
+  display: grid;
+  width: 34px;
+  height: 40px;
+  padding: 0;
+  place-items: center;
+  border: 0;
+  border-radius: 0;
+  color: inherit;
+  background: transparent;
+  box-shadow: none;
+  cursor: pointer;
+  transition: opacity .25s ease, transform .35s var(--pebble-ease);
+}
+
+.pebble-hero__nav-button:hover {
+  transform: translateX(-2px);
+}
+
+.pebble-hero__nav-button + .pebble-hero__nav-button:hover {
+  transform: translateX(2px);
+}
+
+.pebble-hero__nav-button svg {
+  width: 20px;
+  height: 20px;
+}
+
+.pebble-hero__nav-button.swiper-button-disabled {
+  opacity: .42;
+  cursor: default;
+}
+
+.pebble-hero__empty {
+  display: grid;
+  width: 100%;
+  height: 100%;
+  place-items: center;
+  padding: 32px;
+  color: #fff;
+  text-align: center;
+}
+
+.pebble-hero__empty h2 {
+  position: relative;
+  z-index: 2;
+  margin: 0;
+  color: inherit;
+  font-family: var(--pebble-heading-font, Arial, sans-serif);
+  font-size: clamp(38px, 7vw, 72px);
+  line-height: 1;
+}
+
+@keyframes pebble-hero-progress {
+  from {
+    transform: scaleX(0);
+  }
+
+  to {
+    transform: scaleX(1);
+  }
+}
+
+@media (max-width: 989px) {
+  .pebble-hero__frame {
+    height: min(var(--pebble-desktop-height), 680px);
+  }
+
+  .pebble-hero__slide-inner {
+    padding: 44px;
+  }
+
+  .pebble-hero__heading {
+    font-size: clamp(var(--pebble-mobile-heading-size), 7vw, var(--pebble-heading-size));
+  }
+}
+
+@media (max-width: 749px) {
+  .pebble-hero__frame {
+    width: min(var(--pebble-max-width), calc(100% - (var(--pebble-mobile-gap) * 2)));
+    height: var(--pebble-mobile-height);
+    border-radius: min(var(--pebble-radius), 24px);
+  }
+
+  .pebble-hero--full .pebble-hero__frame {
+    width: 100%;
+  }
+
+  .pebble-hero__slide-inner,
+  .pebble-hero--top-left .pebble-hero__slide-inner,
+  .pebble-hero--top-center .pebble-hero__slide-inner,
+  .pebble-hero--top-right .pebble-hero__slide-inner,
+  .pebble-hero--middle-left .pebble-hero__slide-inner,
+  .pebble-hero--middle-center .pebble-hero__slide-inner,
+  .pebble-hero--middle-right .pebble-hero__slide-inner,
+  .pebble-hero--bottom-left .pebble-hero__slide-inner,
+  .pebble-hero--bottom-center .pebble-hero__slide-inner,
+  .pebble-hero--bottom-right .pebble-hero__slide-inner {
+    align-items: flex-start;
+    justify-content: flex-end;
+    padding: 32px 24px 76px;
+  }
+
+  .pebble-hero__content,
+  .pebble-hero--top-center .pebble-hero__content,
+  .pebble-hero--middle-center .pebble-hero__content,
+  .pebble-hero--bottom-center .pebble-hero__content,
+  .pebble-hero--top-right .pebble-hero__content,
+  .pebble-hero--middle-right .pebble-hero__content,
+  .pebble-hero--bottom-right .pebble-hero__content {
+    width: 100%;
+    text-align: left;
+  }
+
+  .pebble-hero__eyebrow {
+    margin-bottom: 16px;
+    font-size: 11px;
+  }
+
+  .pebble-hero__heading,
+  .pebble-hero--top-center .pebble-hero__heading,
+  .pebble-hero--middle-center .pebble-hero__heading,
+  .pebble-hero--bottom-center .pebble-hero__heading,
+  .pebble-hero--top-right .pebble-hero__heading,
+  .pebble-hero--middle-right .pebble-hero__heading,
+  .pebble-hero--bottom-right .pebble-hero__heading {
+    max-width: 10ch;
+    margin-inline: 0;
+    font-size: var(--pebble-mobile-heading-size);
+  }
+
+  .pebble-hero__description,
+  .pebble-hero--top-center .pebble-hero__description,
+  .pebble-hero--middle-center .pebble-hero__description,
+  .pebble-hero--bottom-center .pebble-hero__description,
+  .pebble-hero--top-right .pebble-hero__description,
+  .pebble-hero--middle-right .pebble-hero__description,
+  .pebble-hero--bottom-right .pebble-hero__description {
+    margin: 16px 0 0;
+    font-size: 14px;
+  }
+
+  .pebble-hero__button {
+    min-height: 46px;
+    gap: 14px;
+    margin-top: 22px;
+    padding-left: 20px;
+    font-size: 13px;
+  }
+
+  .pebble-hero__button-icon {
+    width: 34px;
+    height: 34px;
+    flex-basis: 34px;
+  }
+
+  .pebble-hero__controls {
+    right: 24px;
+    bottom: 24px;
+    left: 24px;
+    width: auto;
+  }
+
+  .pebble-hero__controls--navigation-only {
+    right: 18px;
+    left: auto;
+  }
+
+  .pebble-hero__fraction {
+    font-size: 13px;
+  }
+
+  .pebble-hero__pagination-line {
+    margin-left: 18px;
+  }
+
+  .pebble-hero__navigation {
+    margin-left: 10px;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .pebble-hero__image,
+  .pebble-hero__placeholder,
+  .pebble-hero__animate,
+  .pebble-hero__button,
+  .pebble-hero__button-icon,
+  .pebble-hero__nav-button {
+    transition: none;
+  }
+
+  .pebble-hero__animate {
+    opacity: 1;
+    transform: none;
+  }
+
+}

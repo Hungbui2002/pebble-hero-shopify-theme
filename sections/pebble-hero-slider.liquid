@@ -1,0 +1,578 @@
+{{ 'pebble-hero-slider.css' | asset_url | stylesheet_tag }}
+
+{% liquid
+  assign slide_count = section.blocks.size
+  assign has_multiple_slides = false
+  if slide_count > 1
+    assign has_multiple_slides = true
+  endif
+
+  assign autoplay_enabled = false
+  if section.settings.autoplay and has_multiple_slides
+    assign autoplay_enabled = true
+  endif
+%}
+
+{% capture swiper_options %}
+  {
+    "slidesPerView": 1,
+    "spaceBetween": 0,
+    "speed": {{ section.settings.transition_speed }},
+    "effect": "fade",
+    "fadeEffect": { "crossFade": true },
+    "loop": {{ has_multiple_slides }},
+    "allowTouchMove": {{ has_multiple_slides }},
+    "watchSlidesProgress": true,
+    "keyboard": { "enabled": true, "onlyInViewport": true },
+    "autoplay": {% if autoplay_enabled %}{ "delay": {{ section.settings.autoplay_delay }}, "disableOnInteraction": false, "pauseOnMouseEnter": {{ section.settings.pause_on_hover }} }{% else %}false{% endif %}
+  }
+{% endcapture %}
+
+<section
+  id="PebbleHero-{{ section.id }}"
+  class="pebble-hero pebble-hero--{{ section.settings.layout }} pebble-hero--{{ section.settings.content_position }}{% if autoplay_enabled %} pebble-hero--autoplay{% endif %}"
+  style="
+    --pebble-max-width: {{ section.settings.max_width }}px;
+    --pebble-page-gap: {{ section.settings.page_gap }}px;
+    --pebble-mobile-gap: {{ section.settings.mobile_gap }}px;
+    --pebble-radius: {{ section.settings.corner_radius }}px;
+    --pebble-desktop-height: {{ section.settings.desktop_height }}px;
+    --pebble-mobile-height: {{ section.settings.mobile_height }}px;
+    --pebble-content-width: {{ section.settings.content_width }}px;
+    --pebble-heading-size: {{ section.settings.heading_size }}px;
+    --pebble-mobile-heading-size: {{ section.settings.mobile_heading_size }}px;
+    --pebble-overlay-color: {{ section.settings.overlay_color }};
+    --pebble-overlay-opacity: {{ section.settings.overlay_opacity | divided_by: 100.0 }};
+    --pebble-autoplay-delay: {{ section.settings.autoplay_delay }}ms;
+    --pebble-padding-top: {{ section.settings.padding_top }}px;
+    --pebble-padding-bottom: {{ section.settings.padding_bottom }}px;
+    --pebble-heading-font: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
+    --pebble-body-font: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }};
+  "
+  aria-label="{{ section.settings.accessibility_label | escape }}"
+>
+  <div class="pebble-hero__frame">
+    <div
+      class="swiper pebble-hero__swiper"
+      data-swiper
+      data-swiper-options="{{ swiper_options | strip_newlines | escape }}"
+    >
+      <div class="swiper-wrapper">
+        {% for block in section.blocks %}
+          {% liquid
+            assign desktop_image = block.settings.image_desktop
+            if desktop_image == blank
+              assign desktop_image = block.settings.image_mobile
+            endif
+
+            assign image_loading = 'lazy'
+            assign image_fetchpriority = 'auto'
+            if forloop.first
+              assign image_loading = 'eager'
+              assign image_fetchpriority = 'high'
+            endif
+
+            assign image_alt = desktop_image.alt | default: block.settings.heading | strip_html
+            assign placeholder_index = forloop.index0 | modulo: 3 | plus: 1
+            assign placeholder_name = 'hero-apparel-' | append: placeholder_index
+          %}
+
+          <article
+            class="swiper-slide pebble-hero__slide"
+            style="
+              --pebble-slide-background: {{ block.settings.background_color }};
+              --pebble-text-color: {{ block.settings.text_color }};
+              --pebble-button-background: {{ block.settings.button_background }};
+              --pebble-button-text: {{ block.settings.button_text_color }};
+              --pebble-image-position: {{ block.settings.image_position }};
+              background: var(--pebble-slide-background);
+            "
+            data-swiper-slide-block
+            data-slide-index="{{ forloop.index0 }}"
+            data-shopify-block-id="{{ block.id }}"
+            role="group"
+            aria-roledescription="slide"
+            aria-label="{{ 'sections.pebble_hero.slide_label' | t: index: forloop.index, total: forloop.length }}"
+            {{ block.shopify_attributes }}
+          >
+            <div class="pebble-hero__media">
+              {% if desktop_image != blank %}
+                <picture>
+                  {% if block.settings.image_mobile != blank %}
+                    <source
+                      media="(max-width: 749px)"
+                      srcset="
+                        {{ block.settings.image_mobile | image_url: width: 375 }} 375w,
+                        {{ block.settings.image_mobile | image_url: width: 550 }} 550w,
+                        {{ block.settings.image_mobile | image_url: width: 750 }} 750w
+                      "
+                      sizes="100vw"
+                    >
+                  {% endif %}
+                  {{
+                    desktop_image
+                    | image_url: width: 2400
+                    | image_tag:
+                      widths: '750, 1100, 1500, 2000, 2400',
+                      sizes: '100vw',
+                      loading: image_loading,
+                      fetchpriority: image_fetchpriority,
+                      class: 'pebble-hero__image',
+                      alt: image_alt
+                  }}
+                </picture>
+              {% else %}
+                {{ placeholder_name | placeholder_svg_tag: 'pebble-hero__placeholder' }}
+              {% endif %}
+            </div>
+
+            <div class="pebble-hero__overlay"></div>
+
+            <div class="pebble-hero__slide-inner">
+              <div class="pebble-hero__content">
+                {% if block.settings.eyebrow != blank %}
+                  <p class="pebble-hero__eyebrow pebble-hero__animate pebble-hero__animate--1">
+                    {{ block.settings.eyebrow | escape }}
+                  </p>
+                {% endif %}
+
+                {% if block.settings.heading != blank %}
+                  <h2 class="pebble-hero__heading pebble-hero__animate pebble-hero__animate--2">
+                    {{ block.settings.heading }}
+                  </h2>
+                {% endif %}
+
+                {% if block.settings.description != blank %}
+                  <div class="pebble-hero__description pebble-hero__animate pebble-hero__animate--3">
+                    {{ block.settings.description }}
+                  </div>
+                {% endif %}
+
+                {% if block.settings.button_label != blank %}
+                  {% if block.settings.button_link != blank %}
+                    <a
+                      class="pebble-hero__button pebble-hero__animate pebble-hero__animate--4"
+                      href="{{ block.settings.button_link }}"
+                    >
+                      <span>{{ block.settings.button_label | escape }}</span>
+                      <span class="pebble-hero__button-icon" aria-hidden="true">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </a>
+                  {% else %}
+                    <span class="pebble-hero__button pebble-hero__animate pebble-hero__animate--4">
+                      <span>{{ block.settings.button_label | escape }}</span>
+                      <span class="pebble-hero__button-icon" aria-hidden="true">
+                        <svg viewBox="0 0 16 16" fill="none">
+                          <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
+                        </svg>
+                      </span>
+                    </span>
+                  {% endif %}
+                {% endif %}
+              </div>
+            </div>
+          </article>
+        {% else %}
+          <div class="swiper-slide pebble-hero__slide">
+            <div class="pebble-hero__empty">
+              {{ 'hero-apparel-1' | placeholder_svg_tag: 'pebble-hero__placeholder' }}
+              <div class="pebble-hero__overlay"></div>
+              <h2>{{ 'sections.pebble_hero.empty_heading' | t }}</h2>
+            </div>
+          </div>
+        {% endfor %}
+      </div>
+
+      {% if has_multiple_slides %}
+        {% if section.settings.show_pagination or section.settings.show_navigation %}
+          <div class="pebble-hero__controls{% unless section.settings.show_pagination %} pebble-hero__controls--navigation-only{% endunless %}">
+            {% if section.settings.show_pagination %}
+              <div
+                class="swiper-pagination pebble-hero__pagination"
+                data-swiper-pagination
+                data-swiper-pagination-style="fraction-line"
+                aria-label="{{ 'sections.pebble_hero.pagination_label' | t }}"
+              ></div>
+            {% endif %}
+
+            {% if section.settings.show_navigation %}
+              <div class="pebble-hero__navigation">
+                <button
+                  class="pebble-hero__nav-button"
+                  type="button"
+                  data-swiper-prev
+                  aria-label="{{ 'sections.pebble_hero.previous_slide' | t }}"
+                >
+                  <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <path d="M11.5 4.5 7 9l4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+                <button
+                  class="pebble-hero__nav-button"
+                  type="button"
+                  data-swiper-next
+                  aria-label="{{ 'sections.pebble_hero.next_slide' | t }}"
+                >
+                  <svg viewBox="0 0 18 18" fill="none" aria-hidden="true">
+                    <path d="m6.5 4.5 4.5 4.5-4.5 4.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"/>
+                  </svg>
+                </button>
+              </div>
+            {% endif %}
+          </div>
+        {% endif %}
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Pebble hero slider",
+  "tag": "section",
+  "class": "section-pebble-hero",
+  "max_blocks": 8,
+  "settings": [
+    {
+      "type": "header",
+      "content": "Layout"
+    },
+    {
+      "type": "select",
+      "id": "layout",
+      "label": "Section width",
+      "options": [
+        { "value": "contained", "label": "Contained" },
+        { "value": "full", "label": "Full width" }
+      ],
+      "default": "contained"
+    },
+    {
+      "type": "range",
+      "id": "max_width",
+      "label": "Maximum width",
+      "min": 1000,
+      "max": 2000,
+      "step": 50,
+      "unit": "px",
+      "default": 1600
+    },
+    {
+      "type": "range",
+      "id": "page_gap",
+      "label": "Desktop side gap",
+      "min": 0,
+      "max": 80,
+      "step": 4,
+      "unit": "px",
+      "default": 24
+    },
+    {
+      "type": "range",
+      "id": "mobile_gap",
+      "label": "Mobile side gap",
+      "min": 0,
+      "max": 32,
+      "step": 2,
+      "unit": "px",
+      "default": 12
+    },
+    {
+      "type": "range",
+      "id": "corner_radius",
+      "label": "Corner radius",
+      "min": 0,
+      "max": 48,
+      "step": 2,
+      "unit": "px",
+      "default": 32
+    },
+    {
+      "type": "range",
+      "id": "desktop_height",
+      "label": "Desktop height",
+      "min": 500,
+      "max": 900,
+      "step": 20,
+      "unit": "px",
+      "default": 700
+    },
+    {
+      "type": "range",
+      "id": "mobile_height",
+      "label": "Mobile height",
+      "min": 480,
+      "max": 800,
+      "step": 20,
+      "unit": "px",
+      "default": 620
+    },
+    {
+      "type": "select",
+      "id": "content_position",
+      "label": "Content position",
+      "options": [
+        { "value": "top-left", "label": "Top left" },
+        { "value": "top-center", "label": "Top center" },
+        { "value": "top-right", "label": "Top right" },
+        { "value": "middle-left", "label": "Middle left" },
+        { "value": "middle-center", "label": "Middle center" },
+        { "value": "middle-right", "label": "Middle right" },
+        { "value": "bottom-left", "label": "Bottom left" },
+        { "value": "bottom-center", "label": "Bottom center" },
+        { "value": "bottom-right", "label": "Bottom right" }
+      ],
+      "default": "middle-left"
+    },
+    {
+      "type": "range",
+      "id": "content_width",
+      "label": "Content width",
+      "min": 320,
+      "max": 720,
+      "step": 20,
+      "unit": "px",
+      "default": 560
+    },
+    {
+      "type": "header",
+      "content": "Typography"
+    },
+    {
+      "type": "range",
+      "id": "heading_size",
+      "label": "Desktop heading size",
+      "min": 40,
+      "max": 96,
+      "step": 2,
+      "unit": "px",
+      "default": 64
+    },
+    {
+      "type": "range",
+      "id": "mobile_heading_size",
+      "label": "Mobile heading size",
+      "min": 32,
+      "max": 64,
+      "step": 2,
+      "unit": "px",
+      "default": 44
+    },
+    {
+      "type": "header",
+      "content": "Slider"
+    },
+    {
+      "type": "checkbox",
+      "id": "autoplay",
+      "label": "Enable autoplay",
+      "default": true
+    },
+    {
+      "type": "range",
+      "id": "autoplay_delay",
+      "label": "Autoplay delay",
+      "min": 2000,
+      "max": 9500,
+      "step": 500,
+      "unit": "ms",
+      "default": 5000
+    },
+    {
+      "type": "range",
+      "id": "transition_speed",
+      "label": "Transition speed",
+      "min": 300,
+      "max": 1600,
+      "step": 100,
+      "unit": "ms",
+      "default": 900
+    },
+    {
+      "type": "checkbox",
+      "id": "pause_on_hover",
+      "label": "Pause autoplay on hover",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_navigation",
+      "label": "Show navigation arrows",
+      "default": true
+    },
+    {
+      "type": "checkbox",
+      "id": "show_pagination",
+      "label": "Show pagination",
+      "default": true
+    },
+    {
+      "type": "header",
+      "content": "Overlay"
+    },
+    {
+      "type": "color",
+      "id": "overlay_color",
+      "label": "Overlay color",
+      "default": "#000000"
+    },
+    {
+      "type": "range",
+      "id": "overlay_opacity",
+      "label": "Overlay opacity",
+      "min": 0,
+      "max": 80,
+      "step": 5,
+      "unit": "%",
+      "default": 0
+    },
+    {
+      "type": "header",
+      "content": "Spacing"
+    },
+    {
+      "type": "range",
+      "id": "padding_top",
+      "label": "Top spacing",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "range",
+      "id": "padding_bottom",
+      "label": "Bottom spacing",
+      "min": 0,
+      "max": 120,
+      "step": 4,
+      "unit": "px",
+      "default": 20
+    },
+    {
+      "type": "text",
+      "id": "accessibility_label",
+      "label": "Accessibility label",
+      "default": "Featured campaigns"
+    }
+  ],
+  "blocks": [
+    {
+      "type": "slide",
+      "name": "Slide",
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "image_desktop",
+          "label": "Desktop image"
+        },
+        {
+          "type": "image_picker",
+          "id": "image_mobile",
+          "label": "Mobile image"
+        },
+        {
+          "type": "select",
+          "id": "image_position",
+          "label": "Image position",
+          "options": [
+            { "value": "center center", "label": "Center" },
+            { "value": "center top", "label": "Top" },
+            { "value": "center bottom", "label": "Bottom" },
+            { "value": "left center", "label": "Left" },
+            { "value": "right center", "label": "Right" }
+          ],
+          "default": "center center"
+        },
+        {
+          "type": "text",
+          "id": "eyebrow",
+          "label": "Eyebrow",
+          "default": "NEW CAMPAIGN"
+        },
+        {
+          "type": "inline_richtext",
+          "id": "heading",
+          "label": "Heading",
+          "default": "Blooming Day & Rain"
+        },
+        {
+          "type": "richtext",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "text",
+          "id": "button_label",
+          "label": "Button label",
+          "default": "Shop Collection"
+        },
+        {
+          "type": "url",
+          "id": "button_link",
+          "label": "Button link"
+        },
+        {
+          "type": "color",
+          "id": "background_color",
+          "label": "Placeholder background",
+          "default": "#A5B18F"
+        },
+        {
+          "type": "color",
+          "id": "text_color",
+          "label": "Text color",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "button_background",
+          "label": "Button background",
+          "default": "#FFFFFF"
+        },
+        {
+          "type": "color",
+          "id": "button_text_color",
+          "label": "Button text",
+          "default": "#111111"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Pebble hero slider",
+      "blocks": [
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "NEW CAMPAIGN",
+            "heading": "Blooming Day & Rain",
+            "background_color": "#A5B18F"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "NEW STORIES",
+            "heading": "Colorful Little Moments",
+            "background_color": "#D9A5B3"
+          }
+        },
+        {
+          "type": "slide",
+          "settings": {
+            "eyebrow": "PLAY ALL DAY",
+            "heading": "Playful Days Ahead",
+            "background_color": "#8FAAB6"
+          }
+        }
+      ]
+    }
+  ]
+}
+{% endschema %}
