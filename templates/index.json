@@ -18,6 +18,7 @@
             "eyebrow": "NEW STORIES",
             "heading": "Colorful Little Moments",
             "button_label": "Shop Collection",
+            "use_included_portrait": true,
             "background_color": "#D9A5B3"
           }
         },
@@ -37,7 +38,9 @@
         "autoplay_delay": 5000,
         "show_navigation": true,
         "show_pagination": true,
-        "content_position": "middle-left"
+        "content_position": "middle-left",
+        "content_width": 600,
+        "heading_size": 72
       }
     }
   },

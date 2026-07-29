@@ -121,6 +121,16 @@
                       alt: image_alt
                   }}
                 </picture>
+              {% elsif block.settings.use_included_portrait %}
+                <img
+                  src="{{ 'pebble-slide-2-portrait.png' | asset_url }}"
+                  class="pebble-hero__image"
+                  width="1680"
+                  height="875"
+                  loading="{{ image_loading }}"
+                  fetchpriority="{{ image_fetchpriority }}"
+                  alt="{{ block.settings.heading | strip_html | escape }}"
+                >
               {% else %}
                 {{ placeholder_name | placeholder_svg_tag: 'pebble-hero__placeholder' }}
               {% endif %}
@@ -335,7 +345,7 @@
       "max": 720,
       "step": 20,
       "unit": "px",
-      "default": 560
+      "default": 600
     },
     {
       "type": "header",
@@ -349,7 +359,7 @@
       "max": 96,
       "step": 2,
       "unit": "px",
-      "default": 64
+      "default": 72
     },
     {
       "type": "range",
@@ -474,6 +484,12 @@
           "type": "image_picker",
           "id": "image_mobile",
           "label": "Mobile image"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_included_portrait",
+          "label": "Use included Pebble portrait",
+          "default": false
         },
         {
           "type": "select",
