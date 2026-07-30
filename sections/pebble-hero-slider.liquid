@@ -174,20 +174,26 @@
                       class="pebble-hero__button pebble-hero__animate pebble-hero__animate--4"
                       href="{{ block.settings.button_link }}"
                     >
-                      <span>{{ block.settings.button_label | escape }}</span>
-                      <span class="pebble-hero__button-icon" aria-hidden="true">
-                        <svg viewBox="0 0 16 16" fill="none">
-                          <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                      <span class="pebble-hero__button-label">{{ block.settings.button_label | escape }}</span>
+                      <span class="pebble-hero__button-sweep" aria-hidden="true">
+                        <span class="pebble-hero__button-sweep-label">{{ block.settings.button_label | escape }}</span>
+                        <span class="pebble-hero__button-icon">
+                          <svg viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 3.75 13.75 10 7.5 16.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </span>
                       </span>
                     </a>
                   {% else %}
                     <span class="pebble-hero__button pebble-hero__animate pebble-hero__animate--4">
-                      <span>{{ block.settings.button_label | escape }}</span>
-                      <span class="pebble-hero__button-icon" aria-hidden="true">
-                        <svg viewBox="0 0 16 16" fill="none">
-                          <path d="M3 8h9M8.5 4.5 12 8l-3.5 3.5" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"/>
-                        </svg>
+                      <span class="pebble-hero__button-label">{{ block.settings.button_label | escape }}</span>
+                      <span class="pebble-hero__button-sweep" aria-hidden="true">
+                        <span class="pebble-hero__button-sweep-label">{{ block.settings.button_label | escape }}</span>
+                        <span class="pebble-hero__button-icon">
+                          <svg viewBox="0 0 20 20" fill="none">
+                            <path d="M7.5 3.75 13.75 10 7.5 16.25" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
+                          </svg>
+                        </span>
                       </span>
                     </span>
                   {% endif %}
