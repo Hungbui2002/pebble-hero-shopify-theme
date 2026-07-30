@@ -146,10 +146,10 @@
 }
 
 .pebble-hero__eyebrow {
-  margin: 0 0 26px;
+  margin: 0 0 16px;
   color: inherit;
-  font: 700 13px/1.2 var(--pebble-body-font, Arial, sans-serif);
-  letter-spacing: .045em;
+  font: 700 15px/24px var(--pebble-body-font, Arial, sans-serif);
+  letter-spacing: 0;
   text-transform: uppercase;
 }
 
@@ -160,8 +160,8 @@
   font-family: var(--pebble-heading-font, Arial, sans-serif);
   font-size: var(--pebble-heading-size);
   font-weight: 700;
-  line-height: 1.03;
-  letter-spacing: -.04em;
+  line-height: 1.2;
+  letter-spacing: 0;
   text-transform: none;
 }
 
@@ -181,7 +181,7 @@
   max-width: 44ch;
   margin: 22px 0 0;
   color: inherit;
-  font: 500 16px/1.55 var(--pebble-body-font, Arial, sans-serif);
+  font: 500 15px/24px var(--pebble-body-font, Arial, sans-serif);
 }
 
 .pebble-hero__description p {
@@ -204,16 +204,16 @@
 
 .pebble-hero__button {
   display: inline-flex;
-  min-height: 52px;
+  min-height: 50px;
   align-items: center;
-  gap: 22px;
-  margin-top: 36px;
-  padding: 6px 6px 6px 26px;
+  gap: 4px;
+  margin-top: 30px;
+  padding: 5px 5px 5px 24px;
   border-radius: 999px;
   color: var(--pebble-button-text);
   background: var(--pebble-button-background);
   box-shadow: 0 10px 30px rgba(0, 0, 0, .08);
-  font: 700 15px/1 var(--pebble-body-font, Arial, sans-serif);
+  font: 700 15px/24px var(--pebble-body-font, Arial, sans-serif);
   text-decoration: none;
   transition: transform .35s var(--pebble-ease), box-shadow .35s var(--pebble-ease);
 }
@@ -445,7 +445,7 @@
 
   .pebble-hero__eyebrow {
     margin-bottom: 24px;
-    font-size: 12px;
+    font-size: 15px;
   }
 
   .pebble-hero__heading,
@@ -468,13 +468,13 @@
   .pebble-hero--middle-right .pebble-hero__description,
   .pebble-hero--bottom-right .pebble-hero__description {
     margin: 16px auto 0;
-    font-size: 14px;
+    font-size: 15px;
   }
 
   .pebble-hero__button {
     display: flex;
     width: 100%;
-    min-height: 48px;
+    min-height: 50px;
     justify-content: space-between;
     gap: 14px;
     margin-top: 28px;
