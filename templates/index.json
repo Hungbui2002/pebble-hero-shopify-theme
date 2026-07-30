@@ -30,21 +30,11 @@
             "use_included_portrait": true,
             "background_color": "#D9A5B3"
           }
-        },
-        "pebble-slide-3": {
-          "type": "slide",
-          "settings": {
-            "eyebrow": "PLAY ALL DAY",
-            "heading": "Playful Days Ahead",
-            "button_label": "Shop Collection",
-            "background_color": "#8FAAB6"
-          }
         }
       },
       "block_order": [
         "pebble-slide-1",
-        "pebble-slide-2",
-        "pebble-slide-3"
+        "pebble-slide-2"
       ],
       "settings": {
         "layout": "full",
