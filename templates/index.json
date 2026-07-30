@@ -52,6 +52,7 @@
         "mobile_heading_size": 38,
         "autoplay": true,
         "autoplay_delay": 5000,
+        "transition_speed": 300,
         "show_navigation": true,
         "show_pagination": true
       }
