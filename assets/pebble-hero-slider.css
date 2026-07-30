@@ -331,10 +331,21 @@
 }
 
 .pebble-hero__pagination-line {
+  position: relative;
+  overflow: hidden;
   height: 1px;
   flex: 1 1 auto;
   margin-left: 16px;
-  background: rgba(255, 255, 255, .45);
+  background: rgba(255, 255, 255, .32);
+}
+
+.pebble-hero__pagination-progress {
+  position: absolute;
+  inset: 0;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left center;
+  will-change: transform;
 }
 
 .pebble-hero__navigation {
@@ -396,16 +407,6 @@
   font-family: var(--pebble-heading-font, Arial, sans-serif);
   font-size: clamp(38px, 7vw, 72px);
   line-height: 1;
-}
-
-@keyframes pebble-hero-progress {
-  from {
-    transform: scaleX(0);
-  }
-
-  to {
-    transform: scaleX(1);
-  }
 }
 
 @media (max-width: 989px) {
@@ -543,6 +544,10 @@
   .pebble-hero__animate {
     opacity: 1;
     transform: none;
+  }
+
+  .pebble-hero__pagination-progress {
+    transform: scaleX(1) !important;
   }
 
 }

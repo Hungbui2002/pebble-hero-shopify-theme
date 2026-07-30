@@ -44,7 +44,7 @@
           el: paginationElement,
           type: 'fraction',
           renderFraction: function (currentClass, totalClass) {
-            return '<span class="pebble-hero__fraction"><span class="' + currentClass + '"></span><span aria-hidden="true"> / </span><span class="' + totalClass + '"></span></span><span class="pebble-hero__pagination-line" aria-hidden="true"></span>';
+            return '<span class="pebble-hero__fraction"><span class="' + currentClass + '"></span><span aria-hidden="true"> / </span><span class="' + totalClass + '"></span></span><span class="pebble-hero__pagination-line" aria-hidden="true"><span class="pebble-hero__pagination-progress"></span></span>';
           }
         };
       } else {
@@ -66,6 +66,32 @@
     }
 
     return options;
+  }
+
+  function setupAutoplayProgress(element, swiper) {
+    var progressElement = element.querySelector('.pebble-hero__pagination-progress');
+    if (!progressElement) return;
+
+    function updateProgress(value) {
+      var safeValue = Math.max(0, Math.min(1, value));
+      progressElement.style.transform = 'scaleX(' + safeValue + ')';
+    }
+
+    if (!swiper.params.autoplay) {
+      updateProgress(1);
+      return;
+    }
+
+    updateProgress(0);
+    swiper.on('autoplayTimeLeft', function (_swiper, _timeLeft, progress) {
+      updateProgress(1 - progress);
+    });
+    swiper.on('autoplayStart', function () {
+      updateProgress(0);
+    });
+    swiper.on('autoplayStop', function () {
+      updateProgress(1);
+    });
   }
 
   function collectSwipers(scope) {
@@ -100,7 +126,8 @@
     retryCount = 0;
     collectSwipers(scope).forEach(function (element) {
       if (element.swiper && !element.swiper.destroyed) return;
-      new window.Swiper(element, buildOptions(element));
+      var swiper = new window.Swiper(element, buildOptions(element));
+      setupAutoplayProgress(element, swiper);
     });
   }
 
