@@ -94,6 +94,83 @@
     });
   }
 
+  function setupHeroTextMotion(element, swiper) {
+    var firstAnimationFrame;
+    var secondAnimationFrame;
+    var reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    function cancelPendingAnimation() {
+      if (firstAnimationFrame) {
+        window.cancelAnimationFrame(firstAnimationFrame);
+        firstAnimationFrame = null;
+      }
+
+      if (secondAnimationFrame) {
+        window.cancelAnimationFrame(secondAnimationFrame);
+        secondAnimationFrame = null;
+      }
+    }
+
+    function getActiveSlide() {
+      return swiper.slides && swiper.slides[swiper.activeIndex];
+    }
+
+    function resetSlideText(slide) {
+      if (!slide) return;
+
+      slide.classList.add('pebble-hero__slide--text-reset');
+      slide.classList.remove('pebble-hero__slide--text-visible');
+      void slide.offsetWidth;
+      slide.classList.remove('pebble-hero__slide--text-reset');
+    }
+
+    function resetInactiveText(activeSlide) {
+      element.querySelectorAll('.pebble-hero__slide').forEach(function (slide) {
+        if (slide !== activeSlide) {
+          resetSlideText(slide);
+        }
+      });
+    }
+
+    function prepareIncomingText() {
+      cancelPendingAnimation();
+      resetSlideText(getActiveSlide());
+    }
+
+    function replayActiveText() {
+      var activeSlide = getActiveSlide();
+      if (!activeSlide) return;
+
+      cancelPendingAnimation();
+      resetSlideText(activeSlide);
+      resetInactiveText(activeSlide);
+
+      if (reduceMotion) {
+        activeSlide.classList.add('pebble-hero__slide--text-visible');
+        return;
+      }
+
+      firstAnimationFrame = window.requestAnimationFrame(function () {
+        secondAnimationFrame = window.requestAnimationFrame(function () {
+          activeSlide.classList.add('pebble-hero__slide--text-visible');
+          firstAnimationFrame = null;
+          secondAnimationFrame = null;
+        });
+      });
+    }
+
+    swiper.on('slideChangeTransitionStart', prepareIncomingText);
+    swiper.on('slideChangeTransitionEnd', replayActiveText);
+    replayActiveText();
+
+    element.pebbleHeroTextCleanup = function () {
+      cancelPendingAnimation();
+      swiper.off('slideChangeTransitionStart', prepareIncomingText);
+      swiper.off('slideChangeTransitionEnd', replayActiveText);
+      element.pebbleHeroTextCleanup = null;
+    };
+  }
+
   function collectSwipers(scope) {
     var elements = [];
     var root = scope || document;
@@ -128,11 +205,16 @@
       if (element.swiper && !element.swiper.destroyed) return;
       var swiper = new window.Swiper(element, buildOptions(element));
       setupAutoplayProgress(element, swiper);
+      setupHeroTextMotion(element, swiper);
     });
   }
 
   function destroySwipers(scope) {
     collectSwipers(scope).forEach(function (element) {
+      if (typeof element.pebbleHeroTextCleanup === 'function') {
+        element.pebbleHeroTextCleanup();
+      }
+
       if (element.swiper && !element.swiper.destroyed) {
         element.swiper.destroy(true, true);
       }
