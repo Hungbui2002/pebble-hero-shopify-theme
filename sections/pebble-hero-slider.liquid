@@ -121,6 +121,16 @@
                       alt: image_alt
                   }}
                 </picture>
+              {% elsif block.settings.use_included_campaign %}
+                <img
+                  src="{{ 'pebble-slide-1-campaign.png' | asset_url }}"
+                  class="pebble-hero__image"
+                  width="1680"
+                  height="875"
+                  loading="{{ image_loading }}"
+                  fetchpriority="{{ image_fetchpriority }}"
+                  alt="{{ block.settings.heading | strip_html | escape }}"
+                >
               {% elsif block.settings.use_included_portrait %}
                 <img
                   src="{{ 'pebble-slide-2-portrait.png' | asset_url }}"
@@ -484,6 +494,12 @@
           "type": "image_picker",
           "id": "image_mobile",
           "label": "Mobile image"
+        },
+        {
+          "type": "checkbox",
+          "id": "use_included_campaign",
+          "label": "Use included Pebble campaign image",
+          "default": false
         },
         {
           "type": "checkbox",

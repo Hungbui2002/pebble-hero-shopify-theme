@@ -18,6 +18,7 @@
             "eyebrow": "NEW CAMPAIGN",
             "heading": "Softness in Comfort",
             "button_label": "Shop Collection",
+            "use_included_campaign": true,
             "background_color": "#A5B18F"
           }
         },
