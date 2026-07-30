@@ -298,10 +298,10 @@
 .pebble-hero__controls {
   position: absolute;
   z-index: 5;
-  right: clamp(28px, 3.5vw, 50px);
-  bottom: clamp(28px, 3vw, 40px);
+  right: 50px;
+  bottom: 60px;
   display: flex;
-  width: min(248px, calc(100% - 56px));
+  width: min(236px, calc(100% - 100px));
   align-items: center;
   color: #fff;
 }
@@ -326,16 +326,16 @@
   flex: 0 0 auto;
   align-items: baseline;
   color: inherit;
-  font: 700 14px/1 var(--pebble-body-font, Arial, sans-serif);
-  letter-spacing: .01em;
+  font: 500 15px/24px var(--pebble-body-font, Arial, sans-serif);
+  letter-spacing: 0;
 }
 
 .pebble-hero__pagination-line {
   position: relative;
   overflow: hidden;
-  height: 1px;
+  height: 2px;
   flex: 1 1 auto;
-  margin-left: 16px;
+  margin-left: 12px;
   background: rgba(255, 255, 255, .32);
 }
 
@@ -352,14 +352,14 @@
   display: flex;
   flex: 0 0 auto;
   align-items: center;
-  gap: 2px;
-  margin-left: 14px;
+  gap: 8px;
+  margin-left: 12px;
 }
 
 .pebble-hero__nav-button {
   display: grid;
-  width: 34px;
-  height: 40px;
+  width: 16px;
+  height: 16px;
   padding: 0;
   place-items: center;
   border: 0;
@@ -380,8 +380,8 @@
 }
 
 .pebble-hero__nav-button svg {
-  width: 20px;
-  height: 20px;
+  width: 16px;
+  height: 16px;
 }
 
 .pebble-hero__nav-button.swiper-button-disabled {
@@ -507,7 +507,7 @@
 
   .pebble-hero__controls {
     right: 16px;
-    bottom: 18px;
+    bottom: 40px;
     left: 16px;
     width: auto;
   }
@@ -518,16 +518,15 @@
   }
 
   .pebble-hero__fraction {
-    font-size: 13px;
+    font-size: 15px;
   }
 
   .pebble-hero__pagination-line {
     margin-left: 12px;
-    opacity: 0;
   }
 
   .pebble-hero__navigation {
-    margin-left: auto;
+    margin-left: 12px;
   }
 }
 
