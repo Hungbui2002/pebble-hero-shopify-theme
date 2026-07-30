@@ -1,0 +1,37 @@
+{% comment %} Snippet for run A/B testing with Layouthub {% endcomment %}
+{% comment %} This snippet render by Layouthub - Easy Page Builder to use function of Google Analytic 4 {% endcomment %}
+<script>
+    window.addEventListener('load', () => {
+        function getCookie(name) {
+            let match = document.cookie.match(RegExp(`(?:^|; )${name}=([^;]*)`));
+            return match ? decodeURIComponent(match[1]) : null;
+        }
+        function setCookie(name, value, days) {
+            let expires = new Date();
+            expires.setTime(expires.getTime() + 864e5 * days);
+            document.cookie = `${name}=${encodeURIComponent(value)}; expires=${expires.toUTCString()}; path=/`;
+        }
+        function handleCampaign(cookieName, threshold, redirectPath) {
+            if (window.location.search.includes("view=")) {
+                return
+            }
+            let cookieValue = getCookie(cookieName);
+    
+            if (!cookieValue) {
+                cookieValue = Math.floor(Math.random() * 101);
+                setCookie(cookieName, cookieValue, 365);
+            }
+            if (Number(cookieValue) > threshold) {
+                window.location.href = `${window.location.origin}${window.location.pathname}${redirectPath}`;
+            }
+        }
+        // Start campaign
+
+        
+// campaign-6
+{% if template == 'product.lh-6912be65cf575b22e36b91c6' %}
+handleCampaign('lh-campaign-6', 50, '?view=lh-6912e47ccf575b22e36b953d');
+{% endif %}
+// End campaign
+    })
+</script>

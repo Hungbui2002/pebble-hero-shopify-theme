@@ -1,0 +1,27 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "layouthub",
+  "sections": {
+    "lh-6912ba46cf575b22e36b9110": {
+      "type": "lh-6912ba46cf575b22e36b9110",
+      "settings": {}
+    },
+    "beae_preview_template_section_7gHKUD": {
+      "type": "beae-preview-template-section",
+      "name": "test-section",
+      "settings": {}
+    }
+  },
+  "order": [
+    "lh-6912ba46cf575b22e36b9110",
+    "beae_preview_template_section_7gHKUD"
+  ]
+}

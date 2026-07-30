@@ -1,0 +1,21 @@
+/*
+ * ------------------------------------------------------------
+ * IMPORTANT: The contents of this file are auto-generated.
+ *
+ * This file may be updated by the Shopify admin theme editor
+ * or related systems. Please exercise caution as any changes
+ * made to this file may be overwritten.
+ * ------------------------------------------------------------
+ */
+{
+  "layout": "theme",
+  "sections": {
+    "lh-untitled-6912e47ccf575b22e36b953d": {
+      "type": "lh-untitled-6912e47ccf575b22e36b953d",
+      "settings": {}
+    }
+  },
+  "order": [
+    "lh-untitled-6912e47ccf575b22e36b953d"
+  ]
+}
