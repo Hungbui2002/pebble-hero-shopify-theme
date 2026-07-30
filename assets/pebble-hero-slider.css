@@ -78,7 +78,7 @@
   display: flex;
   width: 100%;
   height: 100%;
-  padding: clamp(28px, 5vw, 80px);
+  padding: clamp(32px, 3.5vw, 50px);
   pointer-events: none;
 }
 
@@ -146,7 +146,7 @@
 }
 
 .pebble-hero__eyebrow {
-  margin: 0 0 24px;
+  margin: 0 0 26px;
   color: inherit;
   font: 700 13px/1.2 var(--pebble-body-font, Arial, sans-serif);
   letter-spacing: .045em;
@@ -154,14 +154,14 @@
 }
 
 .pebble-hero__heading {
-  max-width: 12ch;
+  max-width: 10ch;
   margin: 0;
   color: inherit;
   font-family: var(--pebble-heading-font, Arial, sans-serif);
   font-size: var(--pebble-heading-size);
   font-weight: 700;
-  line-height: .98;
-  letter-spacing: -.045em;
+  line-height: 1.03;
+  letter-spacing: -.04em;
   text-transform: none;
 }
 
@@ -204,11 +204,11 @@
 
 .pebble-hero__button {
   display: inline-flex;
-  min-height: 56px;
+  min-height: 52px;
   align-items: center;
   gap: 22px;
-  margin-top: 34px;
-  padding: 7px 7px 7px 28px;
+  margin-top: 36px;
+  padding: 6px 6px 6px 26px;
   border-radius: 999px;
   color: var(--pebble-button-text);
   background: var(--pebble-button-background);
@@ -220,9 +220,9 @@
 
 .pebble-hero__button-icon {
   display: inline-grid;
-  width: 42px;
-  height: 42px;
-  flex: 0 0 42px;
+  width: 40px;
+  height: 40px;
+  flex: 0 0 40px;
   place-items: center;
   border-radius: 50%;
   color: var(--pebble-button-background);
@@ -282,10 +282,10 @@
 .pebble-hero__controls {
   position: absolute;
   z-index: 5;
-  right: clamp(28px, 4.5vw, 72px);
-  bottom: clamp(26px, 4vw, 54px);
+  right: clamp(28px, 3.5vw, 50px);
+  bottom: clamp(28px, 3vw, 40px);
   display: flex;
-  width: min(370px, calc(100% - 56px));
+  width: min(248px, calc(100% - 56px));
   align-items: center;
   color: #fff;
 }
@@ -317,8 +317,8 @@
 .pebble-hero__pagination-line {
   height: 1px;
   flex: 1 1 auto;
-  margin-left: 22px;
-  background: rgba(255, 255, 255, .72);
+  margin-left: 16px;
+  background: rgba(255, 255, 255, .45);
 }
 
 .pebble-hero__navigation {
@@ -398,7 +398,7 @@
   }
 
   .pebble-hero__slide-inner {
-    padding: 44px;
+    padding: 36px;
   }
 
   .pebble-hero__heading {
@@ -427,9 +427,9 @@
   .pebble-hero--bottom-left .pebble-hero__slide-inner,
   .pebble-hero--bottom-center .pebble-hero__slide-inner,
   .pebble-hero--bottom-right .pebble-hero__slide-inner {
-    align-items: flex-start;
-    justify-content: flex-end;
-    padding: 32px 24px 76px;
+    align-items: flex-end;
+    justify-content: center;
+    padding: 32px 16px 64px;
   }
 
   .pebble-hero__content,
@@ -440,12 +440,12 @@
   .pebble-hero--middle-right .pebble-hero__content,
   .pebble-hero--bottom-right .pebble-hero__content {
     width: 100%;
-    text-align: left;
+    text-align: center;
   }
 
   .pebble-hero__eyebrow {
-    margin-bottom: 16px;
-    font-size: 11px;
+    margin-bottom: 24px;
+    font-size: 12px;
   }
 
   .pebble-hero__heading,
@@ -455,8 +455,8 @@
   .pebble-hero--top-right .pebble-hero__heading,
   .pebble-hero--middle-right .pebble-hero__heading,
   .pebble-hero--bottom-right .pebble-hero__heading {
-    max-width: 10ch;
-    margin-inline: 0;
+    max-width: 9ch;
+    margin-inline: auto;
     font-size: var(--pebble-mobile-heading-size);
   }
 
@@ -467,28 +467,31 @@
   .pebble-hero--top-right .pebble-hero__description,
   .pebble-hero--middle-right .pebble-hero__description,
   .pebble-hero--bottom-right .pebble-hero__description {
-    margin: 16px 0 0;
+    margin: 16px auto 0;
     font-size: 14px;
   }
 
   .pebble-hero__button {
-    min-height: 46px;
+    display: flex;
+    width: 100%;
+    min-height: 48px;
+    justify-content: space-between;
     gap: 14px;
-    margin-top: 22px;
-    padding-left: 20px;
-    font-size: 13px;
+    margin-top: 28px;
+    padding: 5px 5px 5px 24px;
+    font-size: 14px;
   }
 
   .pebble-hero__button-icon {
-    width: 34px;
-    height: 34px;
-    flex-basis: 34px;
+    width: 38px;
+    height: 38px;
+    flex-basis: 38px;
   }
 
   .pebble-hero__controls {
-    right: 24px;
-    bottom: 24px;
-    left: 24px;
+    right: 16px;
+    bottom: 18px;
+    left: 16px;
     width: auto;
   }
 
@@ -502,11 +505,12 @@
   }
 
   .pebble-hero__pagination-line {
-    margin-left: 18px;
+    margin-left: 12px;
+    opacity: 0;
   }
 
   .pebble-hero__navigation {
-    margin-left: 10px;
+    margin-left: auto;
   }
 }
 

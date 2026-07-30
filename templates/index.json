@@ -16,7 +16,7 @@
           "type": "slide",
           "settings": {
             "eyebrow": "NEW CAMPAIGN",
-            "heading": "Blooming Day & Rain",
+            "heading": "Softness in Comfort",
             "button_label": "Shop Collection",
             "background_color": "#A5B18F"
           }
@@ -24,9 +24,10 @@
         "pebble-slide-2": {
           "type": "slide",
           "settings": {
-            "eyebrow": "NEW STORIES",
-            "heading": "Colorful Little Moments",
+            "eyebrow": "LITTLE MOMENTS",
+            "heading": "Wrapped in Warmth",
             "button_label": "Shop Collection",
+            "use_included_portrait": true,
             "background_color": "#D9A5B3"
           }
         },
@@ -46,9 +47,18 @@
         "pebble-slide-3"
       ],
       "settings": {
+        "layout": "full",
+        "page_gap": 0,
+        "mobile_gap": 0,
+        "corner_radius": 24,
+        "desktop_height": 720,
+        "mobile_height": 540,
+        "padding_top": 0,
+        "padding_bottom": 0,
         "content_position": "middle-left",
         "content_width": 600,
-        "heading_size": 72,
+        "heading_size": 64,
+        "mobile_heading_size": 36,
         "autoplay": true,
         "autoplay_delay": 5000,
         "show_navigation": true,
