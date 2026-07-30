@@ -1,6 +1,8 @@
 {{ 'pebble-hero-slider.css' | asset_url | stylesheet_tag }}
 
 {% liquid
+  assign hero_font = section.settings.font_family
+  assign hero_font_bold = hero_font | font_modify: 'weight', '700'
   assign slide_count = section.blocks.size
   assign has_multiple_slides = false
   if slide_count > 1
@@ -12,6 +14,11 @@
     assign autoplay_enabled = true
   endif
 %}
+
+{% style %}
+  {{ hero_font | font_face: font_display: 'swap' }}
+  {{ hero_font_bold | font_face: font_display: 'swap' }}
+{% endstyle %}
 
 {% capture swiper_options %}
   {
@@ -46,8 +53,8 @@
     --pebble-autoplay-delay: {{ section.settings.autoplay_delay }}ms;
     --pebble-padding-top: {{ section.settings.padding_top }}px;
     --pebble-padding-bottom: {{ section.settings.padding_bottom }}px;
-    --pebble-heading-font: {{ settings.heading_font.family }}, {{ settings.heading_font.fallback_families }};
-    --pebble-body-font: {{ settings.body_font.family }}, {{ settings.body_font.fallback_families }};
+    --pebble-heading-font: {{ hero_font.family }}, {{ hero_font.fallback_families }};
+    --pebble-body-font: {{ hero_font.family }}, {{ hero_font.fallback_families }};
   "
   aria-label="{{ section.settings.accessibility_label | escape }}"
 >
@@ -350,6 +357,12 @@
     {
       "type": "header",
       "content": "Typography"
+    },
+    {
+      "type": "font_picker",
+      "id": "font_family",
+      "label": "Font family",
+      "default": "bricolage_grotesque_n5"
     },
     {
       "type": "range",
