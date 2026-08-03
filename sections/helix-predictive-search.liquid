@@ -1,0 +1,60 @@
+{%- if predictive_search.performed -%}
+  <div id="HelixPredictiveResults">
+    {%- assign result_count = predictive_search.resources.products.size
+      | plus: predictive_search.resources.queries.size
+      | plus: predictive_search.resources.collections.size
+      | plus: predictive_search.resources.pages.size
+      | plus: predictive_search.resources.articles.size
+    -%}
+    {%- if predictive_search.resources.products.size > 0 -%}
+      <section class="helix-predictive__group" aria-labelledby="HelixPredictiveProducts">
+        <h3 id="HelixPredictiveProducts">{{ 'sections.helix_header.products' | t }}</h3>
+        <ul class="helix-predictive__products" role="listbox">
+          {%- for product in predictive_search.resources.products -%}
+            {%- assign product_alt = product.featured_image.alt | default: product.title -%}
+            <li role="option">
+              <a class="helix-predictive__product" href="{{ product.url }}">
+                <span class="helix-predictive__media">
+                  {%- if product.featured_image != blank -%}
+                    {{ product.featured_image | image_url: width: 160 | image_tag: loading: 'eager', widths: '80,120,160', sizes: '64px', alt: product_alt }}
+                  {%- else -%}
+                    {{ 'product-1' | placeholder_svg_tag }}
+                  {%- endif -%}
+                </span>
+                <span class="helix-predictive__copy">
+                  <span>{{ product.title }}</span>
+                  <strong>{{ product.price | money }}</strong>
+                </span>
+              </a>
+            </li>
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endif -%}
+    {%- if predictive_search.resources.queries.size > 0 or predictive_search.resources.collections.size > 0 or predictive_search.resources.pages.size > 0 or predictive_search.resources.articles.size > 0 -%}
+      <section class="helix-predictive__group" aria-labelledby="HelixPredictiveSuggestions">
+        <h3 id="HelixPredictiveSuggestions">{{ 'sections.helix_header.suggestions' | t }}</h3>
+        <ul class="helix-predictive__links" role="listbox">
+          {%- for query in predictive_search.resources.queries -%}
+            <li role="option"><a href="{{ query.url }}">{{ query.styled_text }}</a></li>
+          {%- endfor -%}
+          {%- for collection in predictive_search.resources.collections -%}
+            <li role="option"><a href="{{ collection.url }}">{{ collection.title }}</a></li>
+          {%- endfor -%}
+          {%- for page in predictive_search.resources.pages -%}
+            <li role="option"><a href="{{ page.url }}">{{ page.title }}</a></li>
+          {%- endfor -%}
+          {%- for article in predictive_search.resources.articles -%}
+            <li role="option"><a href="{{ article.url }}">{{ article.title }}</a></li>
+          {%- endfor -%}
+        </ul>
+      </section>
+    {%- endif -%}
+    {%- if result_count == 0 -%}
+      <p class="helix-predictive__empty">{{ 'sections.helix_header.no_results' | t: terms: predictive_search.terms }}</p>
+    {%- endif -%}
+    <a class="helix-predictive__view-all" href="{{ routes.search_url }}?q={{ predictive_search.terms | url_encode }}&type=product">
+      {{ 'sections.helix_header.view_all_results' | t }}
+    </a>
+  </div>
+{%- endif -%}
