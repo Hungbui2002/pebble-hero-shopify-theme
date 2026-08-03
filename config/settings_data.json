@@ -23,7 +23,14 @@
     "enable_cart_notification": true,
     "cart_notification_position": "bottom-right",
     "theme_style": "kito",
-    "custom_css": ""
+    "custom_css": "",
+    "blocks": {
+      "7914987560903345225": {
+        "type": "shopify://apps/beae-page-builder/blocks/app-embed/f4353b90-19bd-4f19-8138-af38b7a6de94",
+        "disabled": false,
+        "settings": {}
+      }
+    }
   },
   "presets": {}
 }
