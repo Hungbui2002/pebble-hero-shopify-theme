@@ -1113,6 +1113,11 @@
     height: auto;
     max-height: 42px;
     object-fit: contain;
+    transition: filter var(--helix-header-duration) ease;
+  }
+
+  .helix-header.is-transparent:not(.is-scrolled):not(.has-open-menu) .helix-header__fallback-logo {
+    filter: brightness(0) invert(1);
   }
 
   .helix-header__utilities,
