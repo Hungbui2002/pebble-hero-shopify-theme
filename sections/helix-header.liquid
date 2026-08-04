@@ -34,9 +34,9 @@
   style="--helix-header-bg: {{ section.settings.background }}; --helix-header-text: {{ section.settings.text_color }}; --helix-header-transparent-text: {{ section.settings.transparent_text_color }}; --helix-header-border: {{ section.settings.border_color }}; --helix-header-radius: {{ section.settings.corner_radius }}px; --helix-header-duration: {{ section.settings.animation_duration }}ms; --helix-logo-width: {{ section.settings.logo_width }}px; --helix-mobile-logo-width: {{ section.settings.mobile_logo_width }}px;"
 >
   <svg class="helix-header__sprite" aria-hidden="true">
-    <symbol id="HelixIconSearch" viewBox="0 0 24 24"><circle cx="11" cy="11" r="7.5"/><path d="m16.5 16.5 4 4"/></symbol>
-    <symbol id="HelixIconAccount" viewBox="0 0 24 24"><circle cx="12" cy="8" r="4"/><path d="M4.5 21c.8-4.1 3.3-6.5 7.5-6.5s6.7 2.4 7.5 6.5"/></symbol>
-    <symbol id="HelixIconBag" viewBox="0 0 24 24"><path d="M5 8.5h14l-1 12H6l-1-12Z"/><path d="M9 9V6.5a3 3 0 0 1 6 0V9"/></symbol>
+    <symbol id="HelixIconSearch" viewBox="0 0 24 24"><path d="M21 21 16.7 16.7M19 11C19 15.418 15.418 19 11 19S3 15.418 3 11 6.582 3 11 3s8 3.582 8 8Z"/></symbol>
+    <symbol id="HelixIconAccount" viewBox="0 0 24 24"><path d="M12 13c2.761 0 5-2.239 5-5s-2.239-5-5-5-5 2.239-5 5 2.239 5 5 5Zm0 0a9.192 9.192 0 0 1 8 8m-8-8a9.192 9.192 0 0 0-8 8"/></symbol>
+    <symbol id="HelixIconBag" viewBox="0 0 24 25"><path d="m3 6.5 3-4h12l3 4m-18 0v14c0 1.105.895 2 2 2h14c1.105 0 2-.895 2-2v-14m-18 0h18m-5 4a4 4 0 0 1-8 0"/></symbol>
     <symbol id="HelixIconMenu" viewBox="0 0 24 24"><path d="M3 7h18M3 12h18M3 17h18"/></symbol>
     <symbol id="HelixIconClose" viewBox="0 0 24 24"><path d="m5 5 14 14M19 5 5 19"/></symbol>
     <symbol id="HelixIconChevron" viewBox="0 0 24 24"><path d="m7 10 5 5 5-5"/></symbol>
@@ -214,6 +214,9 @@
               </div>
             </details>
           {% endform %}
+        {%- endif -%}
+        {%- if section.settings.show_country and localization.available_countries.size > 1 and section.settings.show_search -%}
+          <span class="helix-header__utility-divider" aria-hidden="true"></span>
         {%- endif -%}
         {%- if section.settings.show_search -%}
           <a class="helix-header__utility" href="{{ routes.search_url }}" data-overlay-open="search" aria-haspopup="dialog" aria-expanded="false" aria-controls="HelixSearchDrawer-{{ section.id }}" aria-label="{{ 'sections.helix_header.search' | t }}">
@@ -545,7 +548,15 @@
     stroke: currentColor;
     stroke-linecap: round;
     stroke-linejoin: round;
-    stroke-width: 1.6;
+    stroke-width: 1.4;
+  }
+
+  .helix-header__utility-divider {
+    width: 1px;
+    height: 16px;
+    margin-inline: 10px;
+    background: currentColor;
+    opacity: .24;
   }
 
   .helix-visually-hidden {
