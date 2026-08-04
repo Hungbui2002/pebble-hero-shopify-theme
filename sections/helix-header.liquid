@@ -55,7 +55,7 @@
             {%- endif -%}
             <div class="helix-nav__item{% if is_mega %} helix-nav__item--mega{% endif %}"{% if link.links != blank %} data-menu-item{% endif %}>
               <span class="helix-nav__entry">
-                <a class="helix-nav__link" href="{{ link.url }}"{% if link.links != blank %} data-touch-menu-link{% endif %}>{{ link.title }}</a>
+                <a class="helix-nav__link" href="{{ link.url }}"{% if link.links != blank %} data-touch-menu-link{% endif %}><span class="helix-nav__label">{{ link.title }}</span></a>
                 {%- if link.links != blank -%}
                   <button class="helix-nav__toggle" type="button" data-menu-toggle aria-expanded="false" aria-controls="HelixMenu-{{ section.id }}-{{ forloop.index }}" aria-label="{{ 'sections.helix_header.open_menu' | t: title: link.title }}">
                     <svg class="helix-icon" aria-hidden="true"><use href="#HelixIconChevron"/></svg>
@@ -165,7 +165,7 @@
             </div>
           {%- endfor -%}
         {%- else -%}
-          <a class="helix-nav__link" href="{{ routes.all_products_collection_url }}">{{ 'sections.helix_header.shop_all' | t }}</a>
+          <a class="helix-nav__link" href="{{ routes.all_products_collection_url }}"><span class="helix-nav__label">{{ 'sections.helix_header.shop_all' | t }}</span></a>
         {%- endif -%}
       </nav>
 
@@ -682,23 +682,29 @@
     white-space: nowrap;
   }
 
-  .helix-nav__link::after {
+  .helix-nav__label {
+    position: relative;
+    display: inline-block;
+  }
+
+  .helix-nav__label::after {
     position: absolute;
-    right: 12px;
-    bottom: 3px;
-    left: 12px;
+    right: 0;
+    bottom: 0;
+    left: auto;
+    width: 0;
     height: 1px;
     background: currentColor;
     content: '';
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 200ms ease;
+    transition: width 200ms ease-in-out;
   }
 
-  .helix-nav__link:hover::after,
-  .helix-nav__link:focus-visible::after,
-  .helix-nav__item.is-open .helix-nav__link::after {
-    transform: scaleX(1);
+  .helix-nav__link:hover .helix-nav__label::after,
+  .helix-nav__link:focus-visible .helix-nav__label::after,
+  .helix-nav__item.is-open .helix-nav__label::after {
+    right: auto;
+    left: 0;
+    width: 100%;
   }
 
   .helix-nav__toggle {
