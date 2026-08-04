@@ -14,8 +14,8 @@
     "text_color": "#1a1114",
     "body_text_color": "#585d67",
     "button_text_color": "#ffffff",
-    "heading_font": "bricolage_grotesque_n5",
-    "body_font": "bricolage_grotesque_n5",
+    "heading_font": "archivo_n4",
+    "body_font": "figtree_n4",
     "use_theme_typography": false,
     "heading_case": "none",
     "enable_search": true,
@@ -23,14 +23,7 @@
     "enable_cart_notification": true,
     "cart_notification_position": "bottom-right",
     "theme_style": "kito",
-    "custom_css": "",
-    "blocks": {
-      "7914987560903345225": {
-        "type": "shopify://apps/beae-page-builder/blocks/app-embed/f4353b90-19bd-4f19-8138-af38b7a6de94",
-        "disabled": false,
-        "settings": {}
-      }
-    }
+    "custom_css": ""
   },
   "presets": {}
 }

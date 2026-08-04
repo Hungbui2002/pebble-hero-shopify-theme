@@ -484,7 +484,7 @@
     width: 100%;
     height: 80px;
     color: var(--helix-header-text);
-    font-family: var(--theme-body-font, inherit);
+    font-family: var(--theme-body-font, 'Figtree', sans-serif);
     font-size: 14px;
     line-height: 1.35;
   }
@@ -637,7 +637,7 @@
     align-items: center;
     min-width: 0;
     height: 100%;
-    gap: 4px;
+    gap: 0;
   }
 
   .helix-nav__item {
@@ -655,23 +655,26 @@
     position: relative;
     display: flex;
     align-items: center;
-    height: 44px;
+    height: 32px;
   }
 
   .helix-nav__link {
     position: relative;
     display: inline-flex;
     align-items: center;
-    min-height: 44px;
-    padding: 0 7px;
+    min-height: 32px;
+    padding: 5px 12px;
+    font-weight: 500;
+    letter-spacing: .02em;
+    line-height: 22.4px;
     white-space: nowrap;
   }
 
   .helix-nav__link::after {
     position: absolute;
-    right: 7px;
-    bottom: 8px;
-    left: 7px;
+    right: 12px;
+    bottom: 3px;
+    left: 12px;
     height: 1px;
     background: currentColor;
     content: '';
@@ -690,7 +693,7 @@
     display: inline-grid;
     place-items: center;
     width: 32px;
-    height: 44px;
+    height: 32px;
     padding: 0;
     margin-left: -7px;
     border: 0;
@@ -1045,7 +1048,7 @@
     display: grid;
     place-items: center;
     width: var(--helix-logo-width);
-    min-height: 44px;
+    min-height: 32px;
     line-height: 1;
   }
 
@@ -1094,7 +1097,7 @@
     align-items: center;
     justify-content: flex-end;
     min-width: 0;
-    gap: 4px;
+    gap: 0;
   }
 
   .helix-header__utility {
@@ -1104,7 +1107,7 @@
     flex: 0 0 44px;
     width: 44px;
     height: 44px;
-    padding: 0;
+    padding: 10px;
     border: 0;
     color: inherit;
     background: transparent;
@@ -1898,7 +1901,7 @@
       right: 0;
       left: 0;
       height: 56px;
-      padding-inline: 16px;
+      padding-inline: 30px;
       border-radius: 0;
     }
 
@@ -1930,6 +1933,14 @@
 
     .helix-header__mobile-actions {
       justify-self: end;
+      gap: 4px;
+    }
+
+    .helix-header__utility {
+      flex-basis: 40px;
+      width: 40px;
+      height: 40px;
+      padding: 8px;
     }
 
     .helix-header__logo {
