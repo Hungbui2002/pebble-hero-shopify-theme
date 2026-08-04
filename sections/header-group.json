@@ -8,93 +8,51 @@
  * ------------------------------------------------------------
  */
 {
-  "name": "Header group",
+  "name": "t:sections.header.name",
   "type": "header",
   "sections": {
-    "helix-announcement": {
-      "type": "helix-announcement-bar",
+    "announcement-bar": {
+      "type": "announcement-bar",
+      "disabled": true,
       "blocks": {
-        "announcement-1": {
+        "announcement-bar-0": {
           "type": "announcement",
           "settings": {
-            "text": "Free shipping for all orders over $100",
-            "link": ""
-          }
-        },
-        "announcement-2": {
-          "type": "announcement",
-          "settings": {
-            "text": "Receive 20% off your first order",
+            "text": "Welcome to our store",
+            "text_alignment": "center",
+            "color_scheme": "background-1",
             "link": ""
           }
         }
       },
       "block_order": [
-        "announcement-1",
-        "announcement-2"
+        "announcement-bar-0"
       ],
-      "disabled": true,
-      "settings": {
-        "background": "#d3f285",
-        "text_color": "#202020",
-        "autoplay": 5
-      }
+      "settings": {}
     },
-    "helix-header": {
-      "type": "helix-header",
-      "blocks": {
-        "women-banner-1": {
-          "type": "mega_banner",
-          "settings": {
-            "heading": "New arrivals",
-            "cta": "Shop now",
-            "link": ""
-          }
-        },
-        "women-banner-2": {
-          "type": "mega_banner",
-          "settings": {
-            "heading": "Best sellers",
-            "cta": "Shop now",
-            "link": ""
-          }
-        }
-      },
-      "block_order": [
-        "women-banner-1",
-        "women-banner-2"
+    "header": {
+      "type": "header",
+      "custom_css": [
+        ".header__heading-link .h2 {font-size: 16px;}"
       ],
-      "disabled": true,
       "settings": {
-        "logo_width": 110,
-        "mobile_logo_width": 90,
-        "desktop_menu": "main-menu",
-        "mobile_menu": "main-menu",
-        "men_sale_collection": "",
-        "transparent_header": true,
-        "sticky_desktop": true,
-        "sticky_mobile": true,
-        "show_search": true,
-        "show_account": true,
-        "show_cart": true,
-        "cart_drawer": true,
-        "show_country": true,
-        "show_language": true,
-        "popular_searches": "Running shoes\nTrail running shoes\nHiking shoes",
-        "empty_collection_1": "",
-        "empty_collection_2": "",
-        "empty_collection_3": "",
-        "background": "#ffffff",
-        "text_color": "#323232",
-        "transparent_text_color": "#ffffff",
-        "border_color": "#e7e7e7",
-        "corner_radius": 16,
-        "animation_duration": 500
+        "logo_position": "middle-center",
+        "menu": "main-menu",
+        "menu_type_desktop": "dropdown",
+        "sticky_header_type": "always",
+        "show_line_separator": true,
+        "color_scheme": "inverse",
+        "enable_country_selector": false,
+        "enable_language_selector": false,
+        "mobile_logo_position": "center",
+        "margin_bottom": 0,
+        "padding_top": 8,
+        "padding_bottom": 8
       }
     }
   },
   "order": [
-    "helix-announcement",
-    "helix-header"
+    "announcement-bar",
+    "header"
   ]
 }
