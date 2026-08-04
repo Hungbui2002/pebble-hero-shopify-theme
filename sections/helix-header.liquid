@@ -17,6 +17,7 @@
   if settings.search_placeholder != blank
     assign search_placeholder = settings.search_placeholder
   endif
+  assign fallback_logo_url = 'https://helix-shoes-theme.myshopify.com/cdn/shop/files/logo.svg?v=1776243138&width=180'
 -%}
 
 <helix-store-header
@@ -177,7 +178,7 @@
             <span class="helix-header__logo-image helix-header__logo-image--transparent">{{ section.settings.transparent_logo | image_url: width: 420 | image_tag: widths: '110,180,220,320,420', sizes: 'var(--helix-logo-width)', alt: transparent_logo_alt }}</span>
           {%- endif -%}
         {%- else -%}
-          <span class="helix-header__wordmark">{{ shop.name }}</span>
+          <img class="helix-header__fallback-logo" src="{{ fallback_logo_url | escape }}" width="110" height="19" alt="{{ shop.name | escape }}">
         {%- endif -%}
       </a>
 
@@ -244,7 +245,7 @@
             <span class="helix-header__logo-image helix-header__logo-image--transparent">{{ section.settings.transparent_logo | image_url: width: 320 | image_tag: widths: '90,140,180,240,320', sizes: 'var(--helix-mobile-logo-width)', alt: transparent_logo_alt }}</span>
           {%- endif -%}
         {%- else -%}
-          <span class="helix-header__wordmark">{{ shop.name }}</span>
+          <img class="helix-header__fallback-logo" src="{{ fallback_logo_url | escape }}" width="110" height="19" alt="{{ shop.name | escape }}">
         {%- endif -%}
       </a>
       <div class="helix-header__mobile-actions">
@@ -1104,6 +1105,14 @@
     text-overflow: ellipsis;
     text-transform: uppercase;
     white-space: nowrap;
+  }
+
+  .helix-header__fallback-logo {
+    display: block;
+    width: 100%;
+    height: auto;
+    max-height: 42px;
+    object-fit: contain;
   }
 
   .helix-header__utilities,
@@ -1967,6 +1976,10 @@
     }
 
     .helix-header__logo-image img {
+      max-height: 32px;
+    }
+
+    .helix-header__fallback-logo {
       max-height: 32px;
     }
 
