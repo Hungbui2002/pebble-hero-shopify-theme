@@ -15,21 +15,35 @@
         "pebble-slide-1": {
           "type": "slide",
           "settings": {
+            "use_included_campaign": true,
+            "use_included_portrait": false,
+            "image_position": "center center",
             "eyebrow": "NEW CAMPAIGN",
             "heading": "Softness in Comfort",
+            "description": "",
             "button_label": "Shop Collection",
-            "use_included_campaign": true,
-            "background_color": "#A5B18F"
+            "button_link": "",
+            "background_color": "#a5b18f",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_text_color": "#111111"
           }
         },
         "pebble-slide-2": {
           "type": "slide",
           "settings": {
+            "use_included_campaign": false,
+            "use_included_portrait": true,
+            "image_position": "center center",
             "eyebrow": "LITTLE MOMENTS",
             "heading": "Wrapped in Warmth",
+            "description": "",
             "button_label": "Shop Collection",
-            "use_included_portrait": true,
-            "background_color": "#D9A5B3"
+            "button_link": "",
+            "background_color": "#d9a5b3",
+            "text_color": "#ffffff",
+            "button_background": "#ffffff",
+            "button_text_color": "#111111"
           }
         }
       },
@@ -39,13 +53,12 @@
       ],
       "settings": {
         "layout": "full",
+        "max_width": 1600,
         "page_gap": 0,
         "mobile_gap": 0,
         "corner_radius": 0,
         "desktop_height": 900,
         "mobile_height": 580,
-        "padding_top": 0,
-        "padding_bottom": 0,
         "content_position": "middle-left",
         "content_width": 600,
         "heading_size": 68,
@@ -53,12 +66,67 @@
         "autoplay": true,
         "autoplay_delay": 5000,
         "transition_speed": 300,
+        "pause_on_hover": true,
         "show_navigation": true,
-        "show_pagination": true
+        "show_pagination": true,
+        "overlay_color": "#000000",
+        "overlay_opacity": 0,
+        "padding_top": 0,
+        "padding_bottom": 0,
+        "accessibility_label": "Featured campaigns"
       }
+    },
+    "kito_page_intro_8pz9tB": {
+      "type": "kito-page-intro",
+      "name": "KITO page intro",
+      "settings": {
+        "page_title": "About Us",
+        "breadcrumb_text": "Home | About"
+      }
+    },
+    "kito_newsletter_fnQMpt": {
+      "type": "kito-newsletter",
+      "blocks": {
+        "newsletter_kNQCgE": {
+          "type": "newsletter",
+          "settings": {
+            "logo_text": "KITO",
+            "text": "Join our list and get 20% off your first purchase!",
+            "placeholder": "Enter your email",
+            "button_label": "Subscribe"
+          }
+        }
+      },
+      "block_order": [
+        "newsletter_kNQCgE"
+      ],
+      "name": "KITO newsletter",
+      "settings": {}
+    },
+    "kito_hero_ynYVeM": {
+      "type": "kito-hero",
+      "blocks": {
+        "hero_CgxPyw": {
+          "type": "hero",
+          "settings": {
+            "eyebrow": "About Us",
+            "heading": "Bring Exciting Moments Of Fun While Playing & Learning For Children.",
+            "button_label": "Contact us",
+            "button_link": ""
+          }
+        }
+      },
+      "block_order": [
+        "hero_CgxPyw"
+      ],
+      "name": "KITO hero",
+      "settings": {}
     }
   },
   "order": [
-    "pebble_hero"
+    "pebble_hero",
+    "kito_page_intro_8pz9tB",
+    "kito_hero_ynYVeM",
+    "kito_newsletter_fnQMpt"
   ]
 }
