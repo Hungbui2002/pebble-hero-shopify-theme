@@ -310,11 +310,15 @@
                   <svg class="helix-icon" aria-hidden="true"><use href="#HelixIconChevron"/></svg>
                 </button>
               {%- endif -%}
-              {%- if section.settings.show_language and localization.available_languages.size > 1 -%}
-                <button type="button" data-overlay-open="language" aria-haspopup="dialog" aria-controls="HelixLanguageSheet-{{ section.id }}" aria-label="{{ 'sections.helix_header.language' | t }}: {{ localization.language.endonym_name | capitalize }}">
-                  <span>{{ localization.language.endonym_name | capitalize }}</span>
-                  <svg class="helix-icon" aria-hidden="true"><use href="#HelixIconChevron"/></svg>
-                </button>
+              {%- if section.settings.show_language -%}
+                {%- if localization.available_languages.size > 1 -%}
+                  <button type="button" data-overlay-open="language" aria-haspopup="dialog" aria-controls="HelixLanguageSheet-{{ section.id }}" aria-label="{{ 'sections.helix_header.language' | t }}: {{ localization.language.endonym_name | capitalize }}">
+                    <span>{{ localization.language.endonym_name | capitalize }}</span>
+                    <svg class="helix-icon" aria-hidden="true"><use href="#HelixIconChevron"/></svg>
+                  </button>
+                {%- else -%}
+                  <span class="helix-mobile-nav__selector-static" aria-label="{{ 'sections.helix_header.language' | t }}: {{ localization.language.endonym_name | capitalize }}">{{ localization.language.endonym_name | capitalize }}</span>
+                {%- endif -%}
               {%- endif -%}
             </div>
           </div>
@@ -2032,7 +2036,8 @@
     display: none;
   }
 
-  .helix-mobile-nav__selectors > button {
+  .helix-mobile-nav__selectors > button,
+  .helix-mobile-nav__selector-static {
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -2048,7 +2053,7 @@
     white-space: nowrap;
   }
 
-  .helix-mobile-nav__selectors > button:only-child {
+  .helix-mobile-nav__selectors > :only-child {
     grid-column: 1 / -1;
   }
 
