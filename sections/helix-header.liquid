@@ -345,12 +345,24 @@
               <nav class="helix-mobile-nav {% if mobile_panel_uses_accent_weight %}helix-mobile-nav--accent{% else %}helix-mobile-nav--body{% endif %}" aria-label="{{ link.title | escape }}">
                 <ul>
                   {%- for child_link in link.links -%}
+                    {%- assign mobile_collection_image = false -%}
+                    {%- if child_link.type == 'collection_link' and child_link.object != blank -%}
+                      {%- assign mobile_collection_image = child_link.object.image -%}
+                      {%- if mobile_collection_image == blank and child_link.object.products.first.featured_image != blank -%}
+                        {%- assign mobile_collection_image = child_link.object.products.first.featured_image -%}
+                      {%- endif -%}
+                    {%- endif -%}
                     <li>
-                      <span class="helix-mobile-nav__row">
+                      <span class="helix-mobile-nav__row{% if mobile_collection_image %} has-collection-image{% endif %}">
                         {%- if child_link.url == blank or child_link.url == '#' -%}
                           <span class="helix-mobile-nav__label">{{ child_link.title }}</span>
                         {%- else -%}
-                          <a href="{{ child_link.url }}">{{ child_link.title }}</a>
+                          <a href="{{ child_link.url }}">
+                            {%- if mobile_collection_image -%}
+                              <span class="helix-mobile-nav__collection-image" aria-hidden="true">{{ mobile_collection_image | image_url: width: 108 | image_tag: widths: '54,108', sizes: '54px', loading: 'lazy', alt: '' }}</span>
+                            {%- endif -%}
+                            <span class="helix-mobile-nav__text">{{ child_link.title }}</span>
+                          </a>
                         {%- endif -%}
                         {%- if child_link.links != blank -%}
                           <button type="button" data-panel-target="level-{{ parent_index }}-{{ forloop.index }}" aria-label="{{ 'sections.helix_header.open_menu' | t: title: child_link.title }}"><svg class="helix-icon helix-icon--right" aria-hidden="true"><use href="#HelixIconChevron"/></svg></button>
@@ -372,7 +384,23 @@
                   <nav class="helix-mobile-nav helix-mobile-nav--body" aria-label="{{ child_link.title | escape }}">
                     <ul>
                       {%- for grandchild_link in child_link.links -%}
-                        <li><span class="helix-mobile-nav__row"><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></span></li>
+                        {%- assign mobile_collection_image = false -%}
+                        {%- if grandchild_link.type == 'collection_link' and grandchild_link.object != blank -%}
+                          {%- assign mobile_collection_image = grandchild_link.object.image -%}
+                          {%- if mobile_collection_image == blank and grandchild_link.object.products.first.featured_image != blank -%}
+                            {%- assign mobile_collection_image = grandchild_link.object.products.first.featured_image -%}
+                          {%- endif -%}
+                        {%- endif -%}
+                        <li>
+                          <span class="helix-mobile-nav__row{% if mobile_collection_image %} has-collection-image{% endif %}">
+                            <a href="{{ grandchild_link.url }}">
+                              {%- if mobile_collection_image -%}
+                                <span class="helix-mobile-nav__collection-image" aria-hidden="true">{{ mobile_collection_image | image_url: width: 108 | image_tag: widths: '54,108', sizes: '54px', loading: 'lazy', alt: '' }}</span>
+                              {%- endif -%}
+                              <span class="helix-mobile-nav__text">{{ grandchild_link.title }}</span>
+                            </a>
+                          </span>
+                        </li>
                       {%- endfor -%}
                     </ul>
                   </nav>
@@ -1986,6 +2014,38 @@
   .helix-mobile-nav--accent .helix-mobile-nav__row > a,
   .helix-mobile-nav--accent .helix-mobile-nav__label {
     font-weight: 500;
+  }
+
+  .helix-mobile-nav__row.has-collection-image {
+    min-height: 70px;
+    padding-block: 8px;
+  }
+
+  .helix-mobile-nav__row.has-collection-image > a {
+    min-height: 54px;
+    gap: 12px;
+    font-weight: 400;
+  }
+
+  .helix-mobile-nav__collection-image {
+    display: block;
+    flex: 0 0 54px;
+    width: 54px;
+    height: 54px;
+    overflow: hidden;
+    background: #f5f5f5;
+    border-radius: 8px;
+  }
+
+  .helix-mobile-nav__collection-image img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+  }
+
+  .helix-mobile-nav__text {
+    min-width: 0;
   }
 
   .helix-mobile-nav__row > button {
