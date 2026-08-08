@@ -2117,6 +2117,10 @@
       height: 56px;
     }
 
+    .helix-header.has-open-overlay {
+      z-index: 110;
+    }
+
     .helix-header.is-transparent {
       margin-bottom: -56px;
     }
@@ -2430,6 +2434,7 @@
         }
         this.activeOverlay = overlay;
         this.activeTrigger = trigger;
+        this.classList.add('has-open-overlay');
         if (!this.scrollLocked) this.lockScroll();
         overlay.classList.add('is-open');
         overlay.setAttribute('aria-hidden', 'false');
@@ -2465,6 +2470,7 @@
         this.activeTrigger = null;
         this.parentOverlay = null;
         this.parentOverlayTrigger = null;
+        this.classList.remove('has-open-overlay');
         if (unlock) this.unlockScroll();
         if (restoreFocus && trigger?.isConnected) {
           window.setTimeout(() => trigger.focus({ preventScroll: true }), 0);
