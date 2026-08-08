@@ -1966,7 +1966,7 @@
 
   .helix-mobile-panel__header {
     display: grid;
-    grid-template-columns: 44px minmax(0, 1fr) 44px;
+    grid-template-columns: 24px minmax(0, 1fr) 44px;
     padding: 10px 12px;
   }
 
@@ -1975,9 +1975,20 @@
     font-size: 16px;
     font-weight: 700;
     line-height: 1.2;
-    text-align: center;
+    padding-left: 2px;
+    text-align: left;
     text-overflow: ellipsis;
     white-space: nowrap;
+  }
+
+  .helix-mobile-panel__header > [data-panel-back] {
+    width: 24px;
+    padding: 4px;
+  }
+
+  .helix-mobile-panel__header > [data-panel-back] .helix-icon {
+    width: 16px;
+    height: 16px;
   }
 
   .helix-mobile-panel__header > button {
