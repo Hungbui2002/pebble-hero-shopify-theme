@@ -81,7 +81,7 @@
                             <a class="helix-mega__group-title" href="{{ child_link.url }}">{{ child_link.title }}</a>
                             <ul>
                               {%- for grandchild_link in child_link.links -%}
-                                <li><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></li>
+                                <li><a href="{{ grandchild_link.url }}"><span>{{ grandchild_link.title }}</span></a></li>
                               {%- endfor -%}
                             </ul>
                           </div>
@@ -910,9 +910,6 @@
 
   .helix-mega__featured li a,
   .helix-mega__group li a {
-    position: relative;
-    display: inline-flex;
-    align-items: center;
     min-height: 22px;
     font-size: 14px;
     line-height: 22.4px;
@@ -920,6 +917,8 @@
   }
 
   .helix-mega__featured li a {
+    position: relative;
+    display: inline-block;
     color: var(--helix-header-text);
     font-family: var(--theme-heading-font, 'Archivo', sans-serif);
     font-size: 16px;
@@ -928,28 +927,37 @@
   }
 
   .helix-mega__group li a {
+    display: flex;
+    align-items: center;
+    width: 100%;
     font-weight: 400;
   }
 
+  .helix-mega__group li a > span {
+    position: relative;
+    display: block;
+    width: max-content;
+  }
+
   .helix-mega__featured li a::after,
-  .helix-mega__group li a::after {
+  .helix-mega__group li a > span::after {
     position: absolute;
-    bottom: 6px;
-    left: 0;
-    width: 100%;
+    right: 0;
+    bottom: 0;
+    width: 0;
     height: 1px;
     background: currentColor;
     content: '';
-    transform: scaleX(0);
-    transform-origin: left;
-    transition: transform 200ms ease;
+    transition: width 200ms ease-in-out;
   }
 
   .helix-mega__featured li a:hover::after,
   .helix-mega__featured li a:focus-visible::after,
-  .helix-mega__group li a:hover::after,
-  .helix-mega__group li a:focus-visible::after {
-    transform: scaleX(1);
+  .helix-mega__group li a:hover > span::after,
+  .helix-mega__group li a:focus-visible > span::after {
+    right: auto;
+    left: 0;
+    width: 100%;
   }
 
   .helix-mega__promos,
