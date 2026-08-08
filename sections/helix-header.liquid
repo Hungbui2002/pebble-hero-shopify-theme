@@ -119,7 +119,7 @@
                             </span>
                           </div>
                           <div class="helix-mega__products" data-mega-products>
-                            {%- for product in sale_collection.products limit: 5 -%}
+                            {%- for product in sale_collection.products limit: 3 -%}
                               {%- assign compare_price = product.compare_at_price -%}
                               {%- assign current_price = product.price -%}
                               <article class="helix-mega-product">
