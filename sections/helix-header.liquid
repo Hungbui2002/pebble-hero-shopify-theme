@@ -736,25 +736,28 @@
   .helix-nav__panel {
     position: absolute;
     z-index: 4;
+    display: grid;
+    grid-template-rows: 0fr;
     overflow: hidden;
     color: var(--helix-header-text);
     background: var(--helix-header-bg);
     border: 1px solid var(--helix-header-border);
     opacity: 0;
     visibility: hidden;
-    transform: translateY(-8px);
     transition:
-      max-height 300ms ease,
-      opacity 200ms ease,
-      transform 300ms ease,
+      grid-template-rows 300ms cubic-bezier(.6, .14, 0, 1),
+      opacity 200ms cubic-bezier(.6, .14, 0, 1),
       visibility 0s linear 300ms;
+  }
+
+  .helix-nav__panel > * {
+    min-height: 0;
   }
 
   .helix-nav__panel--mega {
     top: 100%;
     right: 0;
     left: 0;
-    max-height: 0;
     border-width: 1px 0 0;
     border-radius: 0 0 var(--helix-header-radius) var(--helix-header-radius);
   }
@@ -763,7 +766,6 @@
     top: calc(100% - 2px);
     left: 0;
     width: 250px;
-    max-height: 0;
     border-radius: 12px;
     box-shadow: 0 18px 44px rgb(16 24 40 / 12%);
   }
@@ -780,10 +782,9 @@
   }
 
   .helix-nav__item.is-open .helix-nav__panel {
-    max-height: min(650px, calc(100vh - 120px));
+    grid-template-rows: 1fr;
     opacity: 1;
     visibility: visible;
-    transform: translateY(0);
     transition-delay: 0s;
   }
 
@@ -791,6 +792,64 @@
     display: grid;
     gap: 2px;
     padding: 12px;
+  }
+
+  .helix-mega > *,
+  .helix-dropdown-menu > li {
+    opacity: 0;
+  }
+
+  .helix-mega > * {
+    transform: translateY(15px);
+  }
+
+  .helix-dropdown-menu > li {
+    transform: translateX(15px);
+  }
+
+  .helix-nav__item.is-open .helix-mega > * {
+    animation: helix-mega-item-in 400ms ease both;
+  }
+
+  .helix-nav__item.is-open .helix-dropdown-menu > li {
+    animation: helix-menu-item-in 400ms ease both;
+  }
+
+  .helix-nav__item.is-open .helix-mega > :nth-child(1) { animation-delay: 200ms; }
+  .helix-nav__item.is-open .helix-mega > :nth-child(2) { animation-delay: 250ms; }
+  .helix-nav__item.is-open .helix-mega > :nth-child(3) { animation-delay: 300ms; }
+  .helix-nav__item.is-open .helix-mega > :nth-child(4) { animation-delay: 350ms; }
+  .helix-nav__item.is-open .helix-mega > :nth-child(5) { animation-delay: 400ms; }
+
+  .helix-nav__item.is-open .helix-dropdown-menu > li:nth-child(1) { animation-delay: 150ms; }
+  .helix-nav__item.is-open .helix-dropdown-menu > li:nth-child(2) { animation-delay: 200ms; }
+  .helix-nav__item.is-open .helix-dropdown-menu > li:nth-child(3) { animation-delay: 250ms; }
+  .helix-nav__item.is-open .helix-dropdown-menu > li:nth-child(4) { animation-delay: 300ms; }
+  .helix-nav__item.is-open .helix-dropdown-menu > li:nth-child(5) { animation-delay: 350ms; }
+  .helix-nav__item.is-open .helix-dropdown-menu > li:nth-child(6) { animation-delay: 400ms; }
+  .helix-nav__item.is-open .helix-dropdown-menu > li:nth-child(7) { animation-delay: 450ms; }
+  .helix-nav__item.is-open .helix-dropdown-menu > li:nth-child(8) { animation-delay: 500ms; }
+
+  @keyframes helix-mega-item-in {
+    from {
+      opacity: 0;
+      transform: translateY(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+
+  @keyframes helix-menu-item-in {
+    from {
+      opacity: 0;
+      transform: translateX(15px);
+    }
+    to {
+      opacity: 1;
+      transform: translateX(0);
+    }
   }
 
   .helix-dropdown-menu a {
@@ -2051,6 +2110,8 @@
   @media (prefers-reduced-motion: reduce) {
     .helix-header__shell,
     .helix-nav__panel,
+    .helix-mega > *,
+    .helix-dropdown-menu > li,
     .helix-nav__toggle .helix-icon,
     .helix-overlay,
     .helix-overlay__panel,
@@ -2058,6 +2119,8 @@
     .helix-mega__promo-media img {
       scroll-behavior: auto;
       transition-duration: .01ms !important;
+      animation-duration: .01ms !important;
+      animation-delay: 0s !important;
     }
   }
 {% endstylesheet %}
@@ -2074,6 +2137,8 @@
         this.stickyDesktop = this.dataset.stickyDesktop === 'true';
         this.stickyMobile = this.dataset.stickyMobile === 'true';
         this.lastScroll = Math.max(0, window.scrollY);
+        this.menuOpenTimer = null;
+        this.pendingMenuItem = null;
         this.menuCloseTimer = null;
         this.menuItems = Array.from(this.querySelectorAll('[data-menu-item]'));
         this.overlays = new Map(Array.from(this.querySelectorAll('[data-overlay]')).map((overlay) => [overlay.dataset.overlay, overlay]));
@@ -2103,6 +2168,7 @@
         document.removeEventListener('cart:refresh', this.boundCartRefresh);
         document.removeEventListener('cart:updated', this.boundCartRefresh);
         this.predictiveController?.abort();
+        this.cancelMenuOpen();
         this.cancelMenuClose();
         if (this.scrollLocked) this.unlockScroll();
       }
@@ -2124,10 +2190,11 @@
           });
           item.addEventListener('mouseenter', () => {
             this.cancelMenuClose();
-            if (this.hoverQuery.matches && this.desktopQuery.matches) this.openMenu(item);
+            if (this.hoverQuery.matches && this.desktopQuery.matches) this.scheduleMenuOpen(item);
           });
           item.addEventListener('mouseleave', () => {
             if (!this.hoverQuery.matches || !this.desktopQuery.matches) return;
+            if (this.pendingMenuItem === item) this.cancelMenuOpen();
             this.scheduleMenuClose();
           });
           item.addEventListener('focusin', () => {
@@ -2148,6 +2215,23 @@
         this.menuCloseTimer = null;
       }
 
+      cancelMenuOpen() {
+        window.clearTimeout(this.menuOpenTimer);
+        this.menuOpenTimer = null;
+        this.pendingMenuItem = null;
+      }
+
+      scheduleMenuOpen(item) {
+        if (item.classList.contains('is-open') || this.pendingMenuItem === item) return;
+        this.cancelMenuOpen();
+        this.pendingMenuItem = item;
+        this.menuOpenTimer = window.setTimeout(() => {
+          this.menuOpenTimer = null;
+          this.pendingMenuItem = null;
+          if (item.matches(':hover')) this.openMenu(item);
+        }, 120);
+      }
+
       scheduleMenuClose() {
         this.cancelMenuClose();
         this.menuCloseTimer = window.setTimeout(() => {
@@ -2159,6 +2243,7 @@
       }
 
       openMenu(item) {
+        this.cancelMenuOpen();
         this.cancelMenuClose();
         this.closeMenus(item);
         item.classList.add('is-open');
@@ -2167,6 +2252,7 @@
       }
 
       closeMenus(except) {
+        if (!except) this.cancelMenuOpen();
         this.cancelMenuClose();
         this.menuItems.forEach((item) => {
           if (item === except) return;
