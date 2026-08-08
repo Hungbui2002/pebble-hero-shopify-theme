@@ -335,7 +335,7 @@
                 <strong>{{ link.title }}</strong>
                 <button type="button" data-overlay-close aria-label="{{ 'sections.helix_header.close_navigation' | t }}"><svg class="helix-icon" aria-hidden="true"><use href="#HelixIconClose"/></svg></button>
               </header>
-              <nav class="helix-mobile-nav helix-mobile-nav--body{% if parent_index == 1 %} helix-mobile-nav--featured{% endif %}" aria-label="{{ link.title | escape }}">
+              <nav class="helix-mobile-nav helix-mobile-nav--body{% if parent_index <= 2 %} helix-mobile-nav--featured{% endif %}" aria-label="{{ link.title | escape }}">
                 <ul>
                   {%- for child_link in link.links -%}
                     <li class="helix-mobile-nav__item--{% if child_link.links == blank %}direct{% else %}group{% endif %}">
@@ -372,6 +372,46 @@
                       {%- endif -%}
                     {%- endfor -%}
                   </div>
+                {%- elsif parent_index == 2 -%}
+                  <section class="helix-mobile-deals" aria-labelledby="HelixMobileDeals-{{ section.id }}">
+                    <h3 id="HelixMobileDeals-{{ section.id }}">Best deals <span aria-hidden="true">🔥</span></h3>
+                    <div class="helix-mobile-deals__grid">
+                      {%- for product in sale_collection.products limit: 6 -%}
+                        {%- assign mobile_compare_price = product.compare_at_price -%}
+                        {%- assign mobile_current_price = product.price -%}
+                        <article class="helix-mobile-product">
+                          <div class="helix-mobile-product__media-wrap">
+                            <a class="helix-mobile-product__media" href="{{ product.url }}">
+                              {%- if product.featured_image != blank -%}
+                                {%- assign mobile_product_alt = product.featured_image.alt | default: product.title -%}
+                                {{ product.featured_image | image_url: width: 420 | image_tag: loading: 'lazy', widths: '180,280,360,420', sizes: 'calc((100vw - 56px) / 2)', alt: mobile_product_alt }}
+                              {%- else -%}
+                                {{ 'product-1' | placeholder_svg_tag }}
+                              {%- endif -%}
+                              {%- if mobile_compare_price > mobile_current_price -%}
+                                {%- assign mobile_savings = mobile_compare_price | minus: mobile_current_price | times: 100 | divided_by: mobile_compare_price -%}
+                                <span class="helix-mobile-product__badge">-{{ mobile_savings }}%</span>
+                              {%- endif -%}
+                            </a>
+                            {%- if product.available -%}
+                              <form class="helix-mobile-product__quick-add" method="post" action="{{ routes.cart_add_url }}" data-helix-quick-add>
+                                <input type="hidden" name="id" value="{{ product.selected_or_first_available_variant.id }}">
+                                <input type="hidden" name="quantity" value="1">
+                                <button type="submit" aria-label="{{ 'sections.helix_header.quick_add_named' | t: title: product.title }}"><svg class="helix-icon" aria-hidden="true"><use href="#HelixIconBag"/></svg></button>
+                              </form>
+                            {%- endif -%}
+                          </div>
+                          <span class="helix-mobile-product__thumbnails" aria-hidden="true">
+                            {%- for image in product.images limit: 2 -%}
+                              <span>{{ image | image_url: width: 72 | image_tag: loading: 'lazy', widths: '36,72', sizes: '28px', alt: '' }}</span>
+                            {%- endfor -%}
+                          </span>
+                          <a class="helix-mobile-product__title" href="{{ product.url }}">{{ product.title }}</a>
+                          <span class="helix-mobile-product__price"><strong>{{ mobile_current_price | money }}</strong>{% if mobile_compare_price > mobile_current_price %}<s>{{ mobile_compare_price | money }}</s>{% endif %}</span>
+                        </article>
+                      {%- endfor -%}
+                    </div>
+                  </section>
                 {%- endif -%}
               </nav>
             </section>
@@ -2083,6 +2123,150 @@
   .helix-mobile-promo__cta::after {
     content: '\2197';
     margin-left: 8px;
+  }
+
+  .helix-mobile-deals {
+    margin-top: 27px;
+  }
+
+  .helix-mobile-deals h3 {
+    margin: 0 0 24px;
+    font-family: var(--theme-heading-font, 'Archivo', sans-serif);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .helix-mobile-deals__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 30px 8px;
+  }
+
+  .helix-mobile-product {
+    display: grid;
+    min-width: 0;
+  }
+
+  .helix-mobile-product__media-wrap {
+    position: relative;
+  }
+
+  .helix-mobile-product__media {
+    display: block;
+    position: relative;
+    width: 100%;
+    overflow: hidden;
+    aspect-ratio: 1 / 1;
+    background: #f5f5f5;
+    border-radius: 15px;
+  }
+
+  .helix-mobile-product__media > img,
+  .helix-mobile-product__media > svg {
+    display: block;
+    width: 100%;
+    height: 100%;
+    padding: 20px 12px;
+    object-fit: contain;
+  }
+
+  .helix-mobile-product__badge {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 22px;
+    padding: 2px 9px;
+    color: #fff;
+    background: #e8070f;
+    border-radius: 999px;
+    font-size: 13px;
+    font-weight: 500;
+    line-height: 1;
+  }
+
+  .helix-mobile-product__quick-add {
+    position: absolute;
+    right: 10px;
+    bottom: 10px;
+  }
+
+  .helix-mobile-product__quick-add button {
+    display: grid;
+    place-items: center;
+    width: 32px;
+    height: 32px;
+    padding: 7px;
+    color: var(--helix-header-text);
+    background: #fff;
+    border: 0;
+    border-radius: 50%;
+    box-shadow: 0 1px 4px rgb(0 0 0 / 8%);
+  }
+
+  .helix-mobile-product__quick-add .helix-icon {
+    width: 17px;
+    height: 17px;
+  }
+
+  .helix-mobile-product__thumbnails {
+    display: flex;
+    gap: 8px;
+    min-height: 28px;
+    margin-top: 12px;
+  }
+
+  .helix-mobile-product__thumbnails > span {
+    display: block;
+    width: 28px;
+    height: 28px;
+    overflow: hidden;
+    background: #f5f5f5;
+    border-radius: 4px;
+  }
+
+  .helix-mobile-product__thumbnails img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+  }
+
+  .helix-mobile-product__title {
+    display: block;
+    margin-top: 12px;
+    overflow: hidden;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 1.35;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+
+  .helix-mobile-product__price {
+    display: flex;
+    align-items: baseline;
+    gap: 6px;
+    margin-top: 7px;
+    overflow: hidden;
+    font-size: 13px;
+    line-height: 1.3;
+    white-space: nowrap;
+  }
+
+  .helix-mobile-product__price strong {
+    color: #df2c34;
+    font-weight: 400;
+  }
+
+  .helix-mobile-product__price s {
+    overflow: hidden;
+    color: #6b6b6b;
+    font-size: 11px;
+    text-overflow: ellipsis;
   }
 
   .helix-mobile-nav__row > button {
