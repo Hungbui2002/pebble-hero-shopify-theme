@@ -278,7 +278,7 @@
           </a>
           <button type="button" data-overlay-close aria-label="{{ 'sections.helix_header.close_navigation' | t }}"><svg class="helix-icon" aria-hidden="true"><use href="#HelixIconClose"/></svg></button>
         </header>
-        <nav class="helix-mobile-nav" aria-label="{{ 'sections.helix_header.mobile_navigation' | t }}">
+        <nav class="helix-mobile-nav helix-mobile-nav--accent" aria-label="{{ 'sections.helix_header.mobile_navigation' | t }}">
           <ul>
             {%- if mobile_menu != blank -%}
               {%- for link in mobile_menu.links -%}
@@ -325,13 +325,20 @@
         {%- for link in mobile_menu.links -%}
           {%- assign parent_index = forloop.index -%}
           {%- if link.links != blank -%}
+            {%- assign mobile_panel_uses_accent_weight = false -%}
+            {%- for child_link in link.links -%}
+              {%- if child_link.links != blank -%}
+                {%- assign mobile_panel_uses_accent_weight = true -%}
+                {%- break -%}
+              {%- endif -%}
+            {%- endfor -%}
             <section class="helix-mobile-panel" data-mobile-panel="level-{{ parent_index }}">
               <header class="helix-drawer__header helix-mobile-panel__header">
                 <button type="button" data-panel-back="root" aria-label="{{ 'sections.helix_header.back' | t }}"><svg class="helix-icon" aria-hidden="true"><use href="#HelixIconBack"/></svg></button>
                 <strong>{{ link.title }}</strong>
                 <button type="button" data-overlay-close aria-label="{{ 'sections.helix_header.close_navigation' | t }}"><svg class="helix-icon" aria-hidden="true"><use href="#HelixIconClose"/></svg></button>
               </header>
-              <nav class="helix-mobile-nav" aria-label="{{ link.title | escape }}">
+              <nav class="helix-mobile-nav {% if mobile_panel_uses_accent_weight %}helix-mobile-nav--accent{% else %}helix-mobile-nav--body{% endif %}" aria-label="{{ link.title | escape }}">
                 <ul>
                   {%- for child_link in link.links -%}
                     <li>
@@ -358,7 +365,7 @@
                     <strong>{{ child_link.title }}</strong>
                     <button type="button" data-overlay-close aria-label="{{ 'sections.helix_header.close_navigation' | t }}"><svg class="helix-icon" aria-hidden="true"><use href="#HelixIconClose"/></svg></button>
                   </header>
-                  <nav class="helix-mobile-nav" aria-label="{{ child_link.title | escape }}">
+                  <nav class="helix-mobile-nav helix-mobile-nav--body" aria-label="{{ child_link.title | escape }}">
                     <ul>
                       {%- for grandchild_link in child_link.links -%}
                         <li><span class="helix-mobile-nav__row"><a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a></span></li>
@@ -1899,7 +1906,7 @@
   .helix-mobile-panel__header > strong {
     overflow: hidden;
     font-size: 16px;
-    font-weight: 600;
+    font-weight: 700;
     line-height: 1.2;
     text-align: center;
     text-overflow: ellipsis;
@@ -1968,7 +1975,13 @@
     min-width: 0;
     min-height: 52px;
     font-size: 16px;
+    font-weight: 400;
     line-height: 1.3;
+  }
+
+  .helix-mobile-nav--accent .helix-mobile-nav__row > a,
+  .helix-mobile-nav--accent .helix-mobile-nav__label {
+    font-weight: 500;
   }
 
   .helix-mobile-nav__row > button {
@@ -2006,7 +2019,7 @@
     background: var(--helix-header-text);
     border: 1px solid var(--helix-header-text);
     border-radius: 999px;
-    font-weight: 600;
+    font-weight: 500;
   }
 
   .helix-mobile-nav__selectors {
@@ -2031,7 +2044,7 @@
     border-radius: 999px;
     background: #f5f5f5;
     font-size: 13px;
-    font-weight: 500;
+    font-weight: 400;
     white-space: nowrap;
   }
 
