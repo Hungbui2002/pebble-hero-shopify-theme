@@ -788,6 +788,10 @@
     transition-delay: 0s;
   }
 
+  .helix-nav__item.is-seamless-switch .helix-nav__panel {
+    transition: none;
+  }
+
   .helix-nav__panel--dropdown > .helix-dropdown-menu {
     display: grid;
     gap: 2px;
@@ -2253,10 +2257,28 @@
       openMenu(item) {
         this.cancelMenuOpen();
         this.cancelMenuClose();
+        const currentItem = this.menuItems.find((menuItem) => menuItem.classList.contains('is-open'));
+        const seamlessSwitch = currentItem
+          && currentItem !== item
+          && currentItem.classList.contains('helix-nav__item--mega')
+          && item.classList.contains('helix-nav__item--mega');
+        this.menuItems.forEach((menuItem) => menuItem.classList.remove('is-seamless-switch'));
+        if (seamlessSwitch) {
+          currentItem.classList.add('is-seamless-switch');
+          item.classList.add('is-seamless-switch');
+        }
         this.closeMenus(item);
         item.classList.add('is-open');
         item.querySelector('[data-menu-toggle]')?.setAttribute('aria-expanded', 'true');
         this.syncHeaderChrome();
+        if (seamlessSwitch) {
+          window.requestAnimationFrame(() => {
+            window.requestAnimationFrame(() => {
+              currentItem.classList.remove('is-seamless-switch');
+              item.classList.remove('is-seamless-switch');
+            });
+          });
+        }
       }
 
       closeMenus(except) {
