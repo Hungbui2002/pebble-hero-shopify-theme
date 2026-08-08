@@ -1024,38 +1024,41 @@
     display: flex;
     align-items: center;
     justify-content: space-between;
-    min-height: 44px;
+    min-height: 50px;
   }
 
   .helix-mega__products-header h3 {
-    font-weight: 500;
+    font-family: var(--theme-heading-font, 'Archivo', sans-serif);
+    font-size: 18px;
+    font-weight: 700;
+    line-height: 25.2px;
   }
 
   .helix-mega__product-controls {
     display: flex;
-    gap: 4px;
+    gap: 10px;
   }
 
   .helix-mega__product-controls button {
     display: grid;
     place-items: center;
-    width: 36px;
-    height: 36px;
+    width: 24px;
+    height: 24px;
     padding: 0;
     border: 0;
-    background: #f3f3f3;
+    background: transparent;
     border-radius: 50%;
   }
 
   .helix-mega__product-controls .helix-icon {
-    width: 17px;
-    height: 17px;
+    width: 24px;
+    height: 24px;
   }
 
   .helix-mega__products {
     display: flex;
-    gap: 10px;
-    padding-bottom: 6px;
+    gap: 12px;
+    padding-block: 10px 0;
     overflow-x: auto;
     overscroll-behavior-inline: contain;
     scroll-behavior: smooth;
@@ -1068,7 +1071,7 @@
   }
 
   .helix-mega-product {
-    flex: 0 0 155px;
+    flex: 0 0 calc((100% - 24px) / 3);
     min-width: 0;
     scroll-snap-align: start;
   }
@@ -1079,7 +1082,7 @@
     overflow: hidden;
     aspect-ratio: 1;
     background: #f3f3f3;
-    border-radius: 10px;
+    border-radius: 16px;
   }
 
   .helix-mega-product__media img,
@@ -1102,14 +1105,15 @@
 
   .helix-mega-product__content {
     display: grid;
-    gap: 5px;
-    padding-top: 9px;
+    gap: 2px;
+    padding-top: 14px;
   }
 
   .helix-mega-product__content > a {
     overflow: hidden;
-    font-size: 13px;
+    font-size: 14px;
     font-weight: 500;
+    line-height: 21px;
     text-overflow: ellipsis;
     white-space: nowrap;
   }
@@ -1118,7 +1122,8 @@
     display: flex;
     flex-wrap: wrap;
     gap: 6px;
-    font-size: 12px;
+    font-size: 14px;
+    line-height: 22.4px;
   }
 
   .helix-mega-product__price strong {
@@ -1131,13 +1136,13 @@
   }
 
   .helix-mega-product form button {
-    min-height: 36px;
-    padding: 7px 10px;
-    border: 1px solid var(--helix-header-text);
+    min-height: 44px;
+    padding: 6px 22px;
+    border: 1px solid rgb(0 0 0 / 7%);
     color: var(--helix-header-text);
-    background: transparent;
+    background: #fff;
     border-radius: 999px;
-    font-size: 12px;
+    font-size: 14px;
     font-weight: 500;
   }
 
