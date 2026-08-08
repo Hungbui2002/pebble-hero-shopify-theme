@@ -67,7 +67,6 @@
                   {%- if is_mega -%}
                     <div class="helix-mega">
                       <div class="helix-mega__featured">
-                        <a class="helix-mega__heading-link" href="{{ link.url }}">{{ 'sections.helix_header.view_all_named' | t: title: link.title }}</a>
                         <ul>
                           {%- for child_link in link.links -%}
                             {%- if child_link.links == blank -%}
@@ -815,18 +814,10 @@
     grid-column: 1;
   }
 
-  .helix-mega__heading-link,
   .helix-mega__group-title {
     display: inline-flex;
     align-items: center;
     min-height: 44px;
-  }
-
-  .helix-mega__heading-link {
-    font-family: var(--theme-body-font, 'Figtree', sans-serif);
-    font-size: 14px;
-    font-weight: 500;
-    line-height: 22.4px;
   }
 
   .helix-mega__group-title {
