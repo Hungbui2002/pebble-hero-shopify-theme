@@ -329,40 +329,21 @@
         {%- for link in mobile_menu.links -%}
           {%- assign parent_index = forloop.index -%}
           {%- if link.links != blank -%}
-            {%- assign mobile_panel_uses_accent_weight = false -%}
-            {%- for child_link in link.links -%}
-              {%- if child_link.links != blank -%}
-                {%- assign mobile_panel_uses_accent_weight = true -%}
-                {%- break -%}
-              {%- endif -%}
-            {%- endfor -%}
             <section class="helix-mobile-panel" data-mobile-panel="level-{{ parent_index }}">
               <header class="helix-drawer__header helix-mobile-panel__header">
                 <button type="button" data-panel-back="root" aria-label="{{ 'sections.helix_header.back' | t }}"><svg class="helix-icon" aria-hidden="true"><use href="#HelixIconBack"/></svg></button>
                 <strong>{{ link.title }}</strong>
                 <button type="button" data-overlay-close aria-label="{{ 'sections.helix_header.close_navigation' | t }}"><svg class="helix-icon" aria-hidden="true"><use href="#HelixIconClose"/></svg></button>
               </header>
-              <nav class="helix-mobile-nav {% if mobile_panel_uses_accent_weight %}helix-mobile-nav--accent{% else %}helix-mobile-nav--body{% endif %}" aria-label="{{ link.title | escape }}">
+              <nav class="helix-mobile-nav helix-mobile-nav--body{% if parent_index == 1 %} helix-mobile-nav--featured{% endif %}" aria-label="{{ link.title | escape }}">
                 <ul>
                   {%- for child_link in link.links -%}
-                    {%- assign mobile_collection_image = false -%}
-                    {%- if child_link.type == 'collection_link' and child_link.object != blank -%}
-                      {%- assign mobile_collection_image = child_link.object.image -%}
-                      {%- if mobile_collection_image == blank and child_link.object.products.first.featured_image != blank -%}
-                        {%- assign mobile_collection_image = child_link.object.products.first.featured_image -%}
-                      {%- endif -%}
-                    {%- endif -%}
-                    <li>
-                      <span class="helix-mobile-nav__row{% if mobile_collection_image %} has-collection-image{% endif %}">
+                    <li class="helix-mobile-nav__item--{% if child_link.links == blank %}direct{% else %}group{% endif %}">
+                      <span class="helix-mobile-nav__row{% if child_link.links == blank %} is-direct-link{% else %} is-group-link{% endif %}">
                         {%- if child_link.url == blank or child_link.url == '#' -%}
                           <span class="helix-mobile-nav__label">{{ child_link.title }}</span>
                         {%- else -%}
-                          <a href="{{ child_link.url }}">
-                            {%- if mobile_collection_image -%}
-                              <span class="helix-mobile-nav__collection-image" aria-hidden="true">{{ mobile_collection_image | image_url: width: 108 | image_tag: widths: '54,108', sizes: '54px', loading: 'lazy', alt: '' }}</span>
-                            {%- endif -%}
-                            <span class="helix-mobile-nav__text">{{ child_link.title }}</span>
-                          </a>
+                          <a href="{{ child_link.url }}">{{ child_link.title }}</a>
                         {%- endif -%}
                         {%- if child_link.links != blank -%}
                           <button type="button" data-panel-target="level-{{ parent_index }}-{{ forloop.index }}" aria-label="{{ 'sections.helix_header.open_menu' | t: title: child_link.title }}"><svg class="helix-icon helix-icon--right" aria-hidden="true"><use href="#HelixIconChevron"/></svg></button>
@@ -371,6 +352,27 @@
                     </li>
                   {%- endfor -%}
                 </ul>
+                {%- if parent_index == 1 -%}
+                  <div class="helix-mobile-promos">
+                    {%- for block in section.blocks -%}
+                      {%- if block.type == 'mega_banner' -%}
+                        {%- assign mobile_banner_link = block.settings.link | default: link.url -%}
+                        <article class="helix-mobile-promo">
+                          <a href="{{ mobile_banner_link }}" aria-label="{{ block.settings.heading | escape }}">
+                            <span class="helix-mobile-promo__media{% if block.settings.image == blank %} is-placeholder{% endif %}">
+                              {%- if block.settings.image != blank -%}
+                                {%- assign mobile_banner_alt = block.settings.image.alt | default: block.settings.heading -%}
+                                {{ block.settings.image | image_url: width: 750 | image_tag: loading: 'lazy', widths: '320,480,600,750', sizes: 'calc(100vw - 32px)', alt: mobile_banner_alt }}
+                              {%- endif -%}
+                            </span>
+                            <span class="helix-mobile-promo__title">{{ block.settings.heading }}</span>
+                            <span class="helix-mobile-promo__cta">{{ block.settings.cta }}</span>
+                          </a>
+                        </article>
+                      {%- endif -%}
+                    {%- endfor -%}
+                  </div>
+                {%- endif -%}
               </nav>
             </section>
             {%- for child_link in link.links -%}
@@ -384,21 +386,9 @@
                   <nav class="helix-mobile-nav helix-mobile-nav--body" aria-label="{{ child_link.title | escape }}">
                     <ul>
                       {%- for grandchild_link in child_link.links -%}
-                        {%- assign mobile_collection_image = false -%}
-                        {%- if grandchild_link.type == 'collection_link' and grandchild_link.object != blank -%}
-                          {%- assign mobile_collection_image = grandchild_link.object.image -%}
-                          {%- if mobile_collection_image == blank and grandchild_link.object.products.first.featured_image != blank -%}
-                            {%- assign mobile_collection_image = grandchild_link.object.products.first.featured_image -%}
-                          {%- endif -%}
-                        {%- endif -%}
                         <li>
-                          <span class="helix-mobile-nav__row{% if mobile_collection_image %} has-collection-image{% endif %}">
-                            <a href="{{ grandchild_link.url }}">
-                              {%- if mobile_collection_image -%}
-                                <span class="helix-mobile-nav__collection-image" aria-hidden="true">{{ mobile_collection_image | image_url: width: 108 | image_tag: widths: '54,108', sizes: '54px', loading: 'lazy', alt: '' }}</span>
-                              {%- endif -%}
-                              <span class="helix-mobile-nav__text">{{ grandchild_link.title }}</span>
-                            </a>
+                          <span class="helix-mobile-nav__row">
+                            <a href="{{ grandchild_link.url }}">{{ grandchild_link.title }}</a>
                           </span>
                         </li>
                       {%- endfor -%}
@@ -2016,36 +2006,83 @@
     font-weight: 500;
   }
 
-  .helix-mobile-nav__row.has-collection-image {
-    min-height: 70px;
-    padding-block: 8px;
+  .helix-mobile-nav--featured .helix-mobile-nav__row.is-direct-link {
+    min-height: 25px;
+    border-bottom: 0;
   }
 
-  .helix-mobile-nav__row.has-collection-image > a {
-    min-height: 54px;
-    gap: 12px;
+  .helix-mobile-nav--featured .helix-mobile-nav__row.is-direct-link > a,
+  .helix-mobile-nav--featured .helix-mobile-nav__row.is-direct-link > .helix-mobile-nav__label {
+    min-height: 25px;
+    font-size: 13px;
+    font-weight: 700;
+    line-height: 1.25;
+  }
+
+  .helix-mobile-nav--featured .helix-mobile-nav__item--direct + .helix-mobile-nav__item--group {
+    margin-top: 14px;
+  }
+
+  .helix-mobile-nav--featured .helix-mobile-nav__row.is-group-link,
+  .helix-mobile-nav--featured .helix-mobile-nav__row.is-group-link > a,
+  .helix-mobile-nav--featured .helix-mobile-nav__row.is-group-link > .helix-mobile-nav__label {
+    min-height: 45px;
+  }
+
+  .helix-mobile-nav--featured .helix-mobile-nav__row.is-group-link > a,
+  .helix-mobile-nav--featured .helix-mobile-nav__row.is-group-link > .helix-mobile-nav__label {
+    font-size: 13px;
     font-weight: 400;
+    line-height: 1.3;
   }
 
-  .helix-mobile-nav__collection-image {
+  .helix-mobile-promos {
+    display: grid;
+    gap: 18px;
+    margin-top: 27px;
+  }
+
+  .helix-mobile-promo > a {
+    display: grid;
+    gap: 10px;
+  }
+
+  .helix-mobile-promo__media {
     display: block;
-    flex: 0 0 54px;
-    width: 54px;
-    height: 54px;
+    width: 100%;
     overflow: hidden;
+    aspect-ratio: 1.5 / 1;
     background: #f5f5f5;
-    border-radius: 8px;
+    border-radius: 12px;
   }
 
-  .helix-mobile-nav__collection-image img {
+  .helix-mobile-promo__media img {
     display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
   }
 
-  .helix-mobile-nav__text {
-    min-width: 0;
+  .helix-mobile-promo__title {
+    margin-top: 2px;
+    font-family: var(--theme-heading-font, 'Archivo', sans-serif);
+    font-size: 14px;
+    font-weight: 700;
+    line-height: 1.3;
+  }
+
+  .helix-mobile-promo__cta {
+    display: inline-flex;
+    align-items: center;
+    width: max-content;
+    font-size: 13px;
+    font-weight: 400;
+    line-height: 1.4;
+  }
+
+  .helix-mobile-promo__cta::after {
+    content: '\2197';
+    margin-left: 8px;
   }
 
   .helix-mobile-nav__row > button {
