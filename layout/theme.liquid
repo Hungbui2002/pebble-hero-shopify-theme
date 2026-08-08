@@ -8,11 +8,15 @@
     {{ 'kito-homepage.css' | asset_url | stylesheet_tag }}
     {{ 'swiper-bundle.min.css' | asset_url | stylesheet_tag }}
     {% assign heading_font_bold = settings.heading_font | font_modify: 'weight', '700' %}
+    {% assign body_font_medium = settings.body_font | font_modify: 'weight', '500' %}
+    {% assign body_font_semibold = settings.body_font | font_modify: 'weight', '600' %}
     {% assign body_font_bold = settings.body_font | font_modify: 'weight', '700' %}
     <style>
       {{ settings.heading_font | font_face }}
       {{ heading_font_bold | font_face }}
       {{ settings.body_font | font_face }}
+      {{ body_font_medium | font_face }}
+      {{ body_font_semibold | font_face }}
       {{ body_font_bold | font_face }}
       :root {
         --theme-accent: {{ settings.accent_color }};
