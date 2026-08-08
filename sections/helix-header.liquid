@@ -2009,9 +2009,13 @@
     }
 
     .helix-mega {
-      grid-template-columns: minmax(110px, .7fr) repeat(2, minmax(110px, .8fr)) minmax(330px, 2fr);
-      gap: 18px;
-      padding: 24px 20px;
+      grid-template-columns: repeat(3, minmax(90px, .5fr)) minmax(500px, 3fr);
+      gap: 14px;
+      padding: 24px 16px;
+    }
+
+    .helix-mega-product {
+      flex-basis: calc((100% - 40px) / 5);
     }
   }
 
