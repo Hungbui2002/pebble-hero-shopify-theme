@@ -155,7 +155,7 @@
                   {%- else -%}
                     <ul class="helix-dropdown-menu">
                       {%- for child_link in link.links -%}
-                        <li><a href="{{ child_link.url }}">{{ child_link.title }}</a></li>
+                        <li><a href="{{ child_link.url }}"><span>{{ child_link.title }}</span></a></li>
                       {%- endfor -%}
                     </ul>
                   {%- endif -%}
@@ -788,7 +788,7 @@
     transition-delay: 0s;
   }
 
-  .helix-dropdown-menu {
+  .helix-nav__panel--dropdown > .helix-dropdown-menu {
     display: grid;
     gap: 2px;
     padding: 10px 0;
@@ -853,15 +853,22 @@
   }
 
   .helix-dropdown-menu a {
-    display: flex;
-    align-items: center;
-    min-height: 38.4px;
+    display: block;
     padding: 0 10px;
     border-radius: 0;
   }
 
-  .helix-dropdown-menu a:hover,
-  .helix-dropdown-menu a:focus-visible {
+  .helix-dropdown-menu a > span {
+    display: flex;
+    align-items: center;
+    min-height: 38.4px;
+    padding: 8px 16px;
+    border-radius: 9.6px;
+    transition: background-color 200ms ease;
+  }
+
+  .helix-dropdown-menu a:hover > span,
+  .helix-dropdown-menu a:focus-visible > span {
     background: rgb(50 50 50 / 6%);
   }
 
