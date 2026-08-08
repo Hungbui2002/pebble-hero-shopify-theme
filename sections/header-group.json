@@ -45,7 +45,8 @@
         "women-banner-1": {
           "type": "mega_banner",
           "settings": {
-            "heading": "New arrivals",
+            "image": "shopify://shop_images/helix-womens-sale.jpg",
+            "heading": "Women's sale",
             "cta": "Shop now",
             "link": ""
           }
@@ -53,7 +54,8 @@
         "women-banner-2": {
           "type": "mega_banner",
           "settings": {
-            "heading": "Best sellers",
+            "image": "shopify://shop_images/helix-womens-favorites.jpg",
+            "heading": "Women's favorites",
             "cta": "Shop now",
             "link": ""
           }

@@ -97,7 +97,7 @@
                                   <span class="helix-mega__promo-media{% if block.settings.image == blank %} is-placeholder{% endif %}">
                                     {%- if block.settings.image != blank -%}
                                       {%- assign banner_alt = block.settings.image.alt | default: block.settings.heading -%}
-                                      {{ block.settings.image | image_url: width: 700 | image_tag: loading: 'lazy', widths: '280,420,560,700', sizes: '(min-width: 991px) 18vw', alt: banner_alt }}
+                                      {{ block.settings.image | image_url: width: 900 | image_tag: loading: 'lazy', widths: '320,480,600,750,900', sizes: '(min-width: 991px) 25vw', alt: banner_alt }}
                                     {%- endif -%}
                                   </span>
                                   <span class="helix-mega__promo-copy">
@@ -954,33 +954,25 @@
 
   .helix-mega__promo {
     min-width: 0;
-    overflow: hidden;
-    background: #eef0eb;
-    border-radius: 12px;
+    background: transparent;
   }
 
   .helix-mega__promo > a {
-    position: relative;
-    display: block;
+    display: grid;
+    gap: 16px;
     height: 100%;
-    min-height: 250px;
   }
 
   .helix-mega__promo-media {
-    position: absolute;
-    inset: 0;
     display: block;
+    overflow: hidden;
+    aspect-ratio: 1.5 / 1;
     background: linear-gradient(145deg, #dadfd1, #a9b5a1);
-  }
-
-  .helix-mega__promo-media::after {
-    position: absolute;
-    inset: 30% 0 0;
-    background: linear-gradient(transparent, rgb(0 0 0 / 58%));
-    content: '';
+    border-radius: 16px;
   }
 
   .helix-mega__promo-media img {
+    display: block;
     width: 100%;
     height: 100%;
     object-fit: cover;
@@ -992,28 +984,32 @@
   }
 
   .helix-mega__promo-copy {
-    position: absolute;
-    right: 18px;
-    bottom: 18px;
-    left: 18px;
-    z-index: 1;
     display: grid;
-    gap: 6px;
-    color: #fff;
+    gap: 10px;
+    color: var(--helix-header-text);
   }
 
   .helix-mega__promo-copy > span {
     font-family: var(--theme-heading-font, 'Archivo', sans-serif);
-    font-size: 20px;
+    font-size: 18px;
     font-weight: 700;
+    line-height: 25.2px;
   }
 
   .helix-mega__promo-copy strong {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     width: max-content;
-    padding-bottom: 2px;
-    border-bottom: 1px solid currentColor;
-    font-size: 13px;
-    font-weight: 500;
+    font-size: 14px;
+    font-weight: 400;
+    line-height: 22.4px;
+  }
+
+  .helix-mega__promo-copy strong::after {
+    font-size: 16px;
+    line-height: 1;
+    content: '\2197';
   }
 
   .helix-mega__products-wrap {
