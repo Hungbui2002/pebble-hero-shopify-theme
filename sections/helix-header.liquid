@@ -2781,9 +2781,10 @@
 
       syncHeaderChrome() {
         const menuOpen = this.menuItems.some((item) => item.classList.contains('is-open'));
+        const megaMenuOpen = this.menuItems.some((item) => item.classList.contains('is-open') && item.classList.contains('helix-nav__item--mega'));
         const localizationOpen = Array.from(this.querySelectorAll('[data-desktop-localization]')).some((details) => details.open);
         this.classList.toggle('has-open-menu', menuOpen || localizationOpen);
-        this.classList.toggle('has-open-nav-menu', menuOpen);
+        this.classList.toggle('has-open-nav-menu', megaMenuOpen);
       }
 
       setupOverlays() {
