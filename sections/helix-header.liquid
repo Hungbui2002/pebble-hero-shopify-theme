@@ -267,6 +267,8 @@
     </div>
   </div>
 
+  <div class="helix-header__menu-backdrop" aria-hidden="true"></div>
+
   <div id="HelixMobileMenu-{{ section.id }}" class="helix-overlay helix-overlay--menu" data-overlay="menu" aria-hidden="true">
     <button class="helix-overlay__backdrop" type="button" data-overlay-backdrop aria-label="{{ 'sections.helix_header.close_navigation' | t }}"></button>
     <div class="helix-overlay__panel helix-overlay__panel--left" role="dialog" aria-modal="true" aria-label="{{ 'sections.helix_header.menu' | t }}">
@@ -686,6 +688,37 @@
       box-shadow var(--helix-header-duration) ease,
       opacity var(--helix-header-duration) ease,
       transform var(--helix-header-duration) ease;
+  }
+
+  .helix-header__menu-backdrop {
+    position: absolute;
+    top: 80px;
+    right: 0;
+    z-index: 1;
+    width: 100%;
+    height: calc(100vh - 80px);
+    background: rgb(50 50 50 / 50%);
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+    -webkit-backdrop-filter: blur(20px);
+    backdrop-filter: blur(20px);
+    transition:
+      opacity 300ms cubic-bezier(.6, .14, 0, 1),
+      visibility 0s linear 300ms;
+  }
+
+  .helix-header.has-open-nav-menu .helix-header__menu-backdrop {
+    opacity: 1;
+    visibility: visible;
+    pointer-events: auto;
+    transition-delay: 0s;
+  }
+
+  .helix-header.is-scrolled .helix-header__menu-backdrop {
+    position: fixed;
+    top: 96px;
+    height: calc(100vh - 96px);
   }
 
   .helix-header.is-transparent:not(.is-scrolled):not(.has-open-menu) .helix-header__shell {
@@ -2455,6 +2488,10 @@
       height: 56px;
     }
 
+    .helix-header__menu-backdrop {
+      display: none;
+    }
+
     .helix-header.has-open-overlay {
       z-index: 110;
     }
@@ -2569,6 +2606,7 @@
 
   @media (prefers-reduced-motion: reduce) {
     .helix-header__shell,
+    .helix-header__menu-backdrop,
     .helix-nav__panel,
     .helix-mega > *,
     .helix-dropdown-menu > li,
@@ -2745,6 +2783,7 @@
         const menuOpen = this.menuItems.some((item) => item.classList.contains('is-open'));
         const localizationOpen = Array.from(this.querySelectorAll('[data-desktop-localization]')).some((details) => details.open);
         this.classList.toggle('has-open-menu', menuOpen || localizationOpen);
+        this.classList.toggle('has-open-nav-menu', menuOpen);
       }
 
       setupOverlays() {
