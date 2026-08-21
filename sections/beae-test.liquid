@@ -109,7 +109,7 @@
                     </svg>
                     </span>
                 </li>
-            {%- when 'collection' and collection.handle -%}
+            {%- when 'collection' -%}
                 {%- if current_tags -%}
                 <li class="beae-breadcrumbs__item">
                     {{ collection.title | link_to: collection.url }}
@@ -1954,4 +1954,13 @@ Your custom code is here (HTML, JavaScript, CSS, Shopify Liquid)
     }
   ]
 }
-{% endschema %}
+{% endschema %}{%- comment -%}
+
+This file has been rewritten to preserve the original behavior.
+
+---
+Changes:
+- from: "{%- when 'collection' and collection.handle -%}"
+  to: "{%- when 'collection' -%}"
+  position: 8551..8576
+{%- endcomment -%}
